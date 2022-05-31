@@ -10,12 +10,12 @@ if (PASSWORD === undefined) {
 }
 
 export const client = new Client({
-    node: "https://localhost:9200",
+    node: "https://es01:9200",
     auth: {
         username: "elastic",
         password: PASSWORD,
     },
     tls: {
-        ca: fs.readFileSync("/opt/elasticsearch-8.2.2/config/certs/http_ca.crt"),
+        ca: fs.readFileSync("certs/ca/ca.crt"),
     }
 });
