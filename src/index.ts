@@ -14,7 +14,7 @@ const port = 9000;
 
 // WARNING: DO NOT USE IN PRODUCTION!
 app.all("*", (req, res, next) => {
-    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Origin", "*");
     next();
 });
 
