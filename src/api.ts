@@ -61,6 +61,10 @@ router.get("/info", async (req, res) => {
  */
 router.get("/demo/search", async (req, res) => {
     if (typeof req.query.keyword === "string") {
+        if (!await client.indices.exists({ index: "demo-index" })) {
+            res.status(500).json({ msg: "Demo dataset is not setup yet." });
+            return;
+        }
         const keyword = req.query.keyword;
         const { took, hits: { hits } } = await client.search({
             index: "demo-index",

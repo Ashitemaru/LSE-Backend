@@ -3,10 +3,9 @@ FROM node:latest
 ENV HOME=/apidoc
 WORKDIR $HOME
 
-COPY package.json $HOME
-COPY yarn.lock $HOME
-RUN yarn
+RUN yarn global add apidoc
 
+COPY package.json $HOME
 ADD src $HOME/src
 RUN yarn doc
 
@@ -21,4 +20,4 @@ RUN rm -r /etc/nginx/conf.d && mkdir /etc/nginx/conf.d
 
 COPY api-doc.conf /etc/nginx/conf.d
 
-EXPOSE 8000
+EXPOSE 80
