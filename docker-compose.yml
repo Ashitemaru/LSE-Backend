@@ -102,6 +102,7 @@ services:
       - ${BACKEND_PORT}:9000
     volumes:
       - certs:/backend/certs
+      - ${DATASET_PATH}:/backend/dataset
 
   apidoc:
     build:

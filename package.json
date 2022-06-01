@@ -12,6 +12,7 @@
     "build": "tsc",
     "doc": "apidoc -i src -o apidoc",
     "start": "node dist/index.js",
+    "setup-demo-data": "node dist/scripts/setupDemoData.js",
     "lint": "eslint src --ext .js,.ts",
     "fix": "eslint src --ext .js,.ts --fix",
     "precommit": "eslint src --ext .js,.ts --fix"
@@ -26,6 +27,7 @@
     "express": "4.18.1",
     "express-validation": "4.1.0",
     "express-winston": "4.2.0",
+    "fast-xml-parser": "4.0.8",
     "winston": "3.7.2"
   },
   "devDependencies": {
@@ -41,7 +43,7 @@
     "typescript": "4.7.2"
   },
   "apidoc": {
-    "sampleUrl": "http://localhost:9000",
+    "sampleUrl": "https://www.unidy.cn/lse",
     "title": "LSE Backend API Doc"
   }
 }
