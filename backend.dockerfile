@@ -6,7 +6,7 @@ WORKDIR $HOME
 RUN yarn config set registry https://registry.npm.taobao.org
 
 COPY package.json $HOME
-COPY yarn.lock $HOME
+# COPY yarn.lock $HOME
 RUN yarn
 
 COPY tsconfig.json $HOME
