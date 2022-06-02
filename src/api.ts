@@ -33,25 +33,30 @@ router.get("/info", async (req, res) => {
  * @apiQuery {string} keyword 查询的关键词
  * @apiSuccess {number} time 查询耗时
  * @apiSuccess {json[]} hits 命中记录
+ * @apiSuccess {string} hits.id 命中记录序号
  * @apiSuccess {string} hits.title 命中记录标题
  * @apiSuccess {string} hits.content 命中记录正文
  * @apiSuccessExample {json} Success-Response:
  *  {
- *   "time": 4,
+ *   "time": 7,
  *   "hits": [
  *     {
+ *       "id": "18697",
  *       "title": "浙江省东阳市人民法院 民事判决书 （2016）浙0783民初17571号",
  *       "content": "略"
  *     },
  *     {
+ *       "id": "18969",
  *       "title": "浙江省杭州市中级人民法院 民事判决书 （2016）浙01民终5728号",
  *       "content": "略"
  *     },
  *     {
+ *       "id": "18983",
  *       "title": "浙江省金华市中级人民法院 民事裁定书 （2016）浙07民终3399号",
  *       "content": "略"
  *     },
  *     {
+ *       "id": "18948",
  *       "title": "江苏省盐城市中级人民法院 民事判决书 （2016）苏09民终319号",
  *       "content": "略"
  *     }
@@ -77,6 +82,7 @@ router.get("/demo/search", async (req, res) => {
         res.json({
             time: took,
             hits: hits.map(({ _source }) => ({
+                id: (_source as any).id,
                 title: (_source as any).title,
                 content: (_source as any).content,
             })),

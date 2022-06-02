@@ -24,7 +24,7 @@ const setupDemoData = async () => {
         const content = obj.writ.QW.attr_oValue;
         await client.index({
             index: "demo-index",
-            document: { title, content },
+            document: { id: file.replace(".xml", ""), title, content },
         });
     }
     await client.indices.refresh({ index: "demo-index" });
