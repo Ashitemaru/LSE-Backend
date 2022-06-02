@@ -3,6 +3,8 @@ FROM node:latest
 ENV HOME=/apidoc
 WORKDIR $HOME
 
+RUN yarn config set registry https://registry.npm.taobao.org
+
 RUN yarn global add apidoc
 
 COPY package.json $HOME
