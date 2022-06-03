@@ -1,4 +1,16 @@
-import { Case, Court, Document, Person, Persons, Prev, Record, Representative } from "../types";
+import {
+    Analysis,
+    Case,
+    Court,
+    Detail,
+    Document,
+    Person,
+    Persons,
+    Prev,
+    Record,
+    Representative,
+    Result,
+} from "../types";
 
 export const parseHead = (WS: any): {
     title: string,
@@ -164,4 +176,31 @@ export const parseRecord = (SSJL: any) : Record | undefined => {
             stage: undefined,
         };
     }
+};
+
+export const parseDetail = (AJJBQK: any): Detail | undefined => {
+    if (AJJBQK === undefined) {
+        return undefined;
+    }
+    return {
+        content: AJJBQK.attr_value,
+    };
+};
+
+export const parseAnalysis = (CPFXGC: any): Analysis | undefined => {
+    if (CPFXGC === undefined) {
+        return undefined;
+    }
+    return {
+        content: CPFXGC.attr_value,
+    };
+};
+
+export const parseResult = (PJJG: any): Result | undefined => {
+    if (PJJG === undefined) {
+        return undefined;
+    }
+    return {
+        content: PJJG.attr_value,
+    };
 };

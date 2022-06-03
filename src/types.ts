@@ -98,3 +98,15 @@ export interface RecordStageUnknown extends RecordBase {
 }
 
 export type Record = RecordStageOne | RecordStageTwo | RecordStageUnknown;
+
+export interface Detail {
+    content: string; // 案件基本情况
+}
+
+export interface Analysis {
+    content: string; // 裁判分析过程
+}
+
+export interface Result {
+    content: string; // 判决结果
+}

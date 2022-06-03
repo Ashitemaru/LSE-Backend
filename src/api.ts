@@ -41,6 +41,9 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {json} hits._case 案件信息
  * @apiSuccess {json} hits.persons 当事人信息
  * @apiSuccess {json} hits.record 诉讼记录
+ * @apiSuccess {json} hits.detail 案件基本情况
+ * @apiSuccess {json} hits.analysis 裁判分析过程
+ * @apiSuccess {json} hits.result 判决结果
  * @apiSuccessExample {json} Success-Response:
  *  {
  *   "time": 6,
@@ -156,7 +159,7 @@ router.get("/info", async (req, res) => {
  *         "joinder": true
  *       },
  *       "record": {
- *         "description": "原告韦斌姬为与被告韦斌强、杜满萍民间借贷纠纷一案，于2016年12月1日向本院提起诉讼，请求判令两被告归还借款10万元，并支付利息（自起诉之日起按中国人民银行同期同档次贷款基准利率计算至实际履行之日止）。本院受理后，依法由审判员甘震适用简易程序独任审判。被告杜满萍在提交答辩状期间对管辖权提出异议，本院裁定予以驳回。杜满萍不服该裁定，上诉至金华市中级人民法院。后金华市中级人民法院驳回上诉，维持原裁定。2017年4月20日，被告杜满萍申请对借条中“杜满萍”的签名是否系其本人书写进行鉴定，本院依法委托金华天鉴司法鉴定所进行鉴定。本院于2017年7月6日公开开庭审理了本案。原告韦斌姬、被告韦斌强及被告杜满萍的委托代理人贾凌珂到庭参加了诉讼。本案现已审理终结。",
+ *         "description": "略",
  *         "cause": "民间借贷纠纷",
  *         "court": true,
  *         "courtInfo": "公开审理",
@@ -170,6 +173,15 @@ router.get("/info", async (req, res) => {
  *         "stage": 1,
  *         "source": "新收",
  *         "procedure": "简易程序"
+ *       },
+ *       "detail": {
+ *         "content": "略"
+ *       },
+ *       "analysis": {
+ *         "content": "略"
+ *       },
+ *       "result": {
+ *         "content": "略"
  *       }
  *     }
  *   ]
