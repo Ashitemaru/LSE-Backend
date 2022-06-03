@@ -25,6 +25,7 @@ export interface Case {
 export interface Person {
     name: string; // 姓名
     role: string; // 角色
+    description: string; // 简介
     status: string; // 诉讼身份
     type: string; // 当事人类型
     gender?: string; // 性别

@@ -52,6 +52,7 @@ export const parseHead = (WS: any): {
 const parseSinglePerson = (person: any): Person => ({
     name: person.SSCYR.attr_value,
     role: person.attr_nameCN,
+    description: person.attr_value,
     status: person.SSSF.attr_value,
     type: person.DSRLX.attr_value,
     gender: person.XB?.attr_value,

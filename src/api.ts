@@ -74,6 +74,7 @@ router.get("/info", async (req, res) => {
  *           {
  *             "name": "韦斌姬",
  *             "role": "起诉方",
+ *             "description": "原告：韦斌姬，女，1972年9月22日出生，汉族，住东阳市。",
  *             "status": "原告",
  *             "type": "自然人",
  *             "gender": "女",
@@ -89,6 +90,7 @@ router.get("/info", async (req, res) => {
  *           {
  *             "name": "韦斌强",
  *             "role": "应诉方",
+ *             "description": "被告：韦斌强，男，1969年6月17日出生，汉族，住东阳市。",
  *             "status": "被告",
  *             "type": "自然人",
  *             "gender": "男",
@@ -102,6 +104,7 @@ router.get("/info", async (req, res) => {
  *           {
  *             "name": "杜满萍",
  *             "role": "应诉方",
+ *             "description": "被告：杜满萍，女，1968年11月25日出生，汉族，住东阳市。",
  *             "status": "被告",
  *             "type": "自然人",
  *             "gender": "女",
@@ -117,6 +120,7 @@ router.get("/info", async (req, res) => {
  *           {
  *             "name": "陈菊华",
  *             "role": "代理人",
+ *             "description": "委托代理人：陈菊华、贾凌珂。",
  *             "status": "委托代理人",
  *             "type": "自然人",
  *             "nationality": "中国",
@@ -133,6 +137,7 @@ router.get("/info", async (req, res) => {
  *           {
  *             "name": "贾凌珂",
  *             "role": "代理人",
+ *             "description": "委托代理人：陈菊华、贾凌珂。",
  *             "status": "委托代理人",
  *             "type": "自然人",
  *             "nationality": "中国",
