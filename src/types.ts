@@ -12,7 +12,7 @@ export interface Document {
 }
 
 export interface Case {
-    name: string; // 案件名称
+    name: string; // 案件案号
     token: string; // 案件字号
     type: string; // 案件类型
     primaryType: string; // 案件一级类别
@@ -50,3 +50,51 @@ export interface Persons {
     representatives: Representative[]; // 代理人
     joinder: boolean | undefined; // 是否共同诉讼
 }
+
+export interface Prev {
+    prevName?: string; // 前审案号
+    prevYear?: string; // 前审案号立案年度
+    prevCaseId?: string; // 前审案号顺序号
+    prevCourt?: string; // 前审法院
+    prevCourtProvince?: string; // 前审法院行政区划(省)
+    prevCourtCity?: string; // 前审法院行政区划(市)
+    prevType?: string; // 前审文书种类
+    prevDate?: string; // 前审裁判时间
+    prevStage?: string; // 前审审级
+    prevCause?: string; // 前审案件由来
+    prevResult?: string; // 前审结案方式
+}
+
+export interface RecordBase {
+    description: string; // 诉讼记录
+    cause?: string; // 案由
+    type?: string; // 诉讼性质
+    court?: boolean; // 开庭审理
+    juvenile?: boolean; // 少年法庭
+    courtInfo?: string; // 开庭审理信息
+    courtDate?: string; // 开庭日期
+    suitDate?: string; // 起诉日期
+    acceptDate?: string; // 受理日期
+    tribunal?: string; // 审判组织
+    single?: boolean; // 独任审判
+    convert?: boolean; // 简易转普通
+    changeProcedure?: boolean; // 是否变更适用程序
+    prev: Prev[]; // 案件由来与审理经过段
+}
+
+export interface RecordStageOne extends RecordBase {
+    stage: 1;
+    source: string; // 一审案件来源
+    procedure?: string; // 一审案件适用程序
+}
+
+export interface RecordStageTwo extends RecordBase {
+    stage: 2;
+    source: string; // 二审案件来源
+}
+
+export interface RecordStageUnknown extends RecordBase {
+    stage: undefined;
+}
+
+export type Record = RecordStageOne | RecordStageTwo | RecordStageUnknown;

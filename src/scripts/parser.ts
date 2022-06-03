@@ -1,4 +1,4 @@
-import { Case, Court, Document, Person, Persons, Representative } from "../types";
+import { Case, Court, Document, Person, Persons, Prev, Record, Representative } from "../types";
 
 export const parseHead = (WS: any): {
     title: string,
@@ -106,4 +106,62 @@ export const parsePersons = (DSR: any): Persons | undefined => {
         representatives,
         joinder,
     };
+};
+
+export const parsePrev = (AJYLYSLJGD: any): Prev[] => {
+    const prev = AJYLYSLJGD === undefined ? [] : AJYLYSLJGD instanceof Array ? AJYLYSLJGD : [AJYLYSLJGD];
+    return prev.map((o) => ({
+        prevName: o.QSAH?.attr_value,
+        prevYear: o.QSAH?.QSAHLAND?.attr_value,
+        prevCaseId: o.QSAH?.QSAHSXH?.attr_value,
+        prevCourt: o.QSFY?.attr_value,
+        prevCourtProvince: o.QSFY?.XZQH_P?.attr_value,
+        prevCourtCity: o.QSFY?.XZQH_C?.attr_value,
+        prevType: o.QSWSZL?.attr_value,
+        prevDate: o.QSCPSJ?.attr_value,
+        prevStage: o.QSSJ?.attr_value,
+        prevCause: o.QSAJYL?.attr_value,
+        prevResult: o.QSJAFS?.attr_value,
+    }));
+};
+
+export const parseRecord = (SSJL: any) : Record | undefined => {
+    if (SSJL === undefined) {
+        return undefined;
+    }
+    const recordBase = {
+        description: SSJL.attr_value,
+        cause: SSJL.AY?.attr_value,
+        type: SSJL.SSXZ?.attr_value,
+        court: SSJL.KTSL === undefined ? undefined : SSJL.KTSL.attr_value === "是",
+        juvenile: SSJL.SNFT === undefined ? undefined : SSJL.SNFT.attr_value === "是",
+        courtInfo: SSJL.KTSLXX?.attr_value,
+        courtDate: SSJL.KTRQ?.attr_value,
+        suitDate: SSJL.QSRQ?.attr_value,
+        acceptDate: SSJL.SLRQ?.attr_value,
+        tribunal: SSJL.SPZZ?.attr_value,
+        single: SSJL.DRSP === undefined ? undefined : SSJL.DRSP.attr_value === "是",
+        convert: SSJL.JYZPT === undefined ? undefined : SSJL.JYZPT.attr_value === "是",
+        changeProcedure: SSJL.SFBGSYCX === undefined ? undefined : SSJL.SFBGSYCX.attr_value === "是",
+        prev: parsePrev(SSJL.AJYLYSLJGD),
+    };
+    if (SSJL.YSAJLY !== undefined) {
+        return {
+            ...recordBase,
+            stage: 1,
+            source: SSJL.YSAJLY.attr_value,
+            procedure: SSJL.YSAJSYCX?.attr_value,
+        };
+    } else if (SSJL.ESAJLY !== undefined) {
+        return {
+            ...recordBase,
+            stage: 2,
+            source: SSJL.ESAJLY.attr_value,
+        };
+    } else {
+        return {
+            ...recordBase,
+            stage: undefined,
+        };
+    }
 };
