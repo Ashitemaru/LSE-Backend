@@ -31,6 +31,8 @@ router.get("/info", async (req, res) => {
  * @apiName demo-search
  * @apiGroup demo
  * @apiQuery {string} keyword 查询的关键词
+ * @apiQuery {string} limit=10 查询记录数量上限
+ * @apiQuery {string} offset=0 查询起始记录偏移量
  * @apiSuccess {number} time 查询耗时
  * @apiSuccess {number} count 命中记录总数
  * @apiSuccess {json[]} hits 命中记录
@@ -189,28 +191,41 @@ router.get("/info", async (req, res) => {
  * @apiVersion 0.0.1
  */
 router.get("/demo/search", async (req, res) => {
-    if (typeof req.query.keyword === "string") {
-        if (!await client.indices.exists({ index: "demo-index" })) {
-            res.status(500).json({ msg: "Demo dataset is not setup yet." });
-            return;
-        }
-        const keyword = req.query.keyword;
-        const { took, hits: { hits } } = await client.search({
-            index: "demo-index",
-            query: {
-                match: {
-                    title: keyword,
-                }
-            }
-        });
-        res.json({
-            time: took,
-            count: hits.length,
-            hits: hits.slice(0, 20).map(({ _source }) => _source),
-        });
-    } else {
+    if (typeof req.query.keyword !== "string") {
         res.status(400).json({ msg: "Query param `keyword` is required." });
+        return;
     }
+    if (typeof req.query.limit === "string" && isNaN(Number(req.query.limit))) {
+        res.status(400).json({ msg: "Query param `limit` shall be numeric." });
+        return;
+    }
+    if (typeof req.query.offset === "string" && isNaN(Number(req.query.offset))) {
+        res.status(400).json({ msg: "Query param `offset` shall be numeric." });
+        return;
+    }
+    if (!await client.indices.exists({ index: "demo-index" })) {
+        res.status(500).json({ msg: "Demo dataset is not setup yet." });
+        return;
+    }
+    const { keyword, limit, offset } = req.query;
+    const { took, hits: { hits } } = await client.search({
+        index: "demo-index",
+        query: {
+            match: {
+                title: keyword,
+            }
+        }
+    }, {
+        querystring: {
+            from: offset,
+            size: limit,
+        }
+    });
+    res.json({
+        time: took,
+        count: hits.length,
+        hits: hits.map(({ _source }) => _source),
+    });
 });
 
 export default router;
