@@ -29,7 +29,9 @@
     "express-validation": "4.1.0",
     "express-winston": "4.2.0",
     "fast-xml-parser": "4.0.8",
-    "winston": "3.7.2"
+    "nodejieba": "2.6.0",
+    "winston": "3.7.2",
+    "word2vec": "1.1.5"
   },
   "devDependencies": {
     "@types/cli-progress": "3.11.0",

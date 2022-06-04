@@ -103,6 +103,7 @@ services:
     volumes:
       - certs:/backend/certs
       - ${DATASET_PATH}:/backend/dataset
+      - ${WORD2VEC_PATH}:/backend/word2vec
 
   apidoc:
     build:

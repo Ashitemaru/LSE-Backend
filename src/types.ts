@@ -157,4 +157,5 @@ export interface File {
     result?: Result; // 判决结果
     timeline: Event[]; // 时间线
     footer?: Footer; // 文尾
+    featureVector: number[]; // 文本特征向量
 }

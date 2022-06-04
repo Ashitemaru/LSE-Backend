@@ -5,12 +5,14 @@ import { SingleBar } from "cli-progress";
 import winston from "winston";
 import { parseFile } from "./parser";
 import { client } from "../elastic";
+import { loadModel } from "./doc2vec";
 
 winston.add(new winston.transports.Console({
     format: winston.format.combine(winston.format.cli()),
 }));
 
 const setupDemoData = async () => {
+    await loadModel();
     if (await client.indices.exists({ index: "demo-index" })) {
         await client.indices.delete({ index: "demo-index" });
     }

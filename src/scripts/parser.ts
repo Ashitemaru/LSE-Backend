@@ -17,6 +17,7 @@ import {
     Representative,
     Result,
 } from "../types";
+import { doc2vec } from "./doc2vec";
 
 export const parseHead = (WS: any): {
     title: string,
@@ -289,6 +290,7 @@ export const parseFile = (filename: string, writ: any): File => {
     const result = parseResult(PJJG);
     const footer = parseFooter(WW);
     const timeline = parseTimeline(CUS_SJX);
+    const featureVector = doc2vec(writ.QW.attr_value);
     return {
         id,
         title,
@@ -302,5 +304,6 @@ export const parseFile = (filename: string, writ: any): File => {
         result,
         timeline,
         footer,
+        featureVector,
     };
 };
