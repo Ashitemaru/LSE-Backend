@@ -227,6 +227,10 @@ router.get("/demo/search", async (req, res) => {
         res.status(400).json({ msg: "Query param `offset` shall be numeric." });
         return;
     }
+    if (Number(req.query.limit) > 200 || Number(req.query.offset) + Number(req.query.limit) > 500) {
+        res.status(400).json({ msg: "Query param `limit` and/or `offset` is too large." });
+        return;
+    }
     if (!await client.indices.exists({ index: "demo-index" })) {
         res.status(500).json({ msg: "Demo dataset is not setup yet." });
         return;
