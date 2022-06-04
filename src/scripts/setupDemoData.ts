@@ -17,9 +17,11 @@ const setupDemoData = async () => {
         await client.indices.delete({ index: "demo-index" });
     }
     const files = await fs.promises.readdir("dataset");
+    const limit = process.argv[2] === undefined ? files.length : Number(process.argv[2]);
+    const filesSelected = files.slice(0, limit)
     const bar = new SingleBar({});
-    bar.start(files.length, 0);
-    for (const filename of files) {
+    bar.start(filesSelected.length, 0);
+    for (const filename of filesSelected) {
         bar.increment(1);
         const text = await fs.promises.readFile(path.join("dataset", filename));
         const parser = new XMLParser({
