@@ -51,7 +51,7 @@ router.get("/info", async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *  {
  *   "time": 6,
- *   "count": 4,
+ *   "count": 113,
  *   "hits": [
  *     {
  *       "id": "18697",
@@ -232,7 +232,7 @@ router.get("/demo/search", async (req, res) => {
         return;
     }
     const { keyword, limit, offset } = req.query;
-    const { took, hits: { hits } } = await client.search({
+    const { took, hits: { total, hits } } = await client.search({
         index: "demo-index",
         query: {
             match: {
@@ -245,9 +245,13 @@ router.get("/demo/search", async (req, res) => {
             size: limit,
         }
     });
+    if (total === undefined || typeof total === "number") {
+        res.status(500).json({ msg: "Unexpected type of field `total`." });
+        return;
+    }
     res.json({
         time: took,
-        count: hits.length,
+        count: total.value,
         hits: hits.map(({ _source }) => _source),
     });
 });
