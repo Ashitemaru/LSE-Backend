@@ -2,16 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { XMLParser } from "fast-xml-parser";
 import winston from "winston";
-import {
-    parseAnalysis,
-    parseDetail,
-    parseFooter,
-    parseHead,
-    parsePersons,
-    parseRecord,
-    parseResult,
-    parseTimeline,
-} from "./parser";
+import { parseFile } from "./parser";
 import { client } from "../elastic";
 
 winston.add(new winston.transports.Console({
@@ -23,8 +14,8 @@ const setupDemoData = async () => {
         await client.indices.delete({ index: "demo-index" });
     }
     const files = await fs.promises.readdir("dataset");
-    for (const file of files) {
-        const text = await fs.promises.readFile(path.join("dataset", file));
+    for (const filename of files) {
+        const text = await fs.promises.readFile(path.join("dataset", filename));
         const parser = new XMLParser({
             ignoreAttributes: false,
             attributeNamePrefix: "attr_",
@@ -33,38 +24,15 @@ const setupDemoData = async () => {
         if (writ === undefined) {
             continue;
         }
-        const { QW: { WS, DSR, SSJL, AJJBQK, CPFXGC, PJJG, WW, CUS_SJX } } = writ;
-        const id = file.replace(".xml", "");
-        if (WS.JBFY === undefined) {
+        if (writ.QW.WS.JBFY === undefined) {
             // 可能是检察院
             continue;
         }
-        const { title, court, document, _case } = parseHead(WS);
-        const persons = parsePersons(DSR);
-        const record = parseRecord(SSJL);
-        const detail = parseDetail(AJJBQK);
-        const analysis = parseAnalysis(CPFXGC);
-        const result = parseResult(PJJG);
-        const footer = parseFooter(WW);
-        const timeline = parseTimeline(CUS_SJX);
-
+        const file = parseFile(filename, writ);
         await client.index({
-            id,
+            id: file.id,
             index: "demo-index",
-            document: {
-                id,
-                title,
-                court,
-                document,
-                _case,
-                persons,
-                record,
-                detail,
-                analysis,
-                result,
-                timeline,
-                footer,
-            },
+            document: file,
         });
     }
     await client.indices.refresh({ index: "demo-index" });

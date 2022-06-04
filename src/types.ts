@@ -143,3 +143,18 @@ export interface Footer {
     month?: string; // 结案月份
     judges: Judge[]; // 法官
 }
+
+export interface File {
+    id: string; // 文件编号
+    title: string; // 文件标题
+    court: Court; // 法院信息
+    document: Document; // 文书信息
+    _case?: Case; // 案件信息
+    persons?: Persons; // 当事人
+    record?: Record; // 诉讼记录
+    detail?: Detail; // 案件基本情况
+    analysis?: Analysis; // 裁判分析过程
+    result?: Result; // 判决结果
+    timeline: Event[]; // 时间线
+    footer?: Footer; // 文尾
+}

@@ -6,6 +6,7 @@ import {
     Detail,
     Document,
     Event,
+    File,
     Footer,
     Judge,
     Person,
@@ -274,5 +275,32 @@ export const parseFooter = (WW: any): Footer | undefined => {
         year: WW.CPSJ?.JAND?.attr_value,
         month: WW.CPSJ?.CUS_JAYF?.attr_value,
         judges,
+    };
+};
+
+export const parseFile = (filename: string, writ: any): File => {
+    const id = filename.replace(".xml", "");
+    const { QW: { WS, DSR, SSJL, AJJBQK, CPFXGC, PJJG, WW, CUS_SJX } } = writ;
+    const { title, court, document, _case } = parseHead(WS);
+    const persons = parsePersons(DSR);
+    const record = parseRecord(SSJL);
+    const detail = parseDetail(AJJBQK);
+    const analysis = parseAnalysis(CPFXGC);
+    const result = parseResult(PJJG);
+    const footer = parseFooter(WW);
+    const timeline = parseTimeline(CUS_SJX);
+    return {
+        id,
+        title,
+        court,
+        document,
+        _case,
+        persons,
+        record,
+        detail,
+        analysis,
+        result,
+        timeline,
+        footer,
     };
 };
