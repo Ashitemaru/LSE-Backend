@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { XMLParser } from "fast-xml-parser";
+import { SingleBar } from "cli-progress";
 import winston from "winston";
 import { parseFile } from "./parser";
 import { client } from "../elastic";
@@ -14,7 +15,10 @@ const setupDemoData = async () => {
         await client.indices.delete({ index: "demo-index" });
     }
     const files = await fs.promises.readdir("dataset");
+    const bar = new SingleBar({});
+    bar.start(files.length, 0);
     for (const filename of files) {
+        bar.increment(1);
         const text = await fs.promises.readFile(path.join("dataset", filename));
         const parser = new XMLParser({
             ignoreAttributes: false,
@@ -35,6 +39,7 @@ const setupDemoData = async () => {
             document: file,
         });
     }
+    bar.stop();
     await client.indices.refresh({ index: "demo-index" });
 };
 
