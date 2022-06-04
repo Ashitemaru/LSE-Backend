@@ -117,6 +117,12 @@ export interface Judge {
     role: string;
 }
 
+export interface Event {
+    origin: string; // 段落来源
+    content: string; // 原文
+    date?: string; // 具体时间
+}
+
 export interface Footer {
     date?: string; // 结案年月日
     year?: string; // 结案年度

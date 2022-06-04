@@ -4,6 +4,7 @@ import {
     Court,
     Detail,
     Document,
+    Event,
     Footer,
     Judge,
     Person,
@@ -206,6 +207,15 @@ export const parseResult = (PJJG: any): Result | undefined => {
         content: PJJG.attr_value,
     };
 };
+
+export const parseTimeline = (CUS_SJX: any): Event[] => {
+    const events: any[] = CUS_SJX?.CUS_SJ === undefined ? [] : CUS_SJX.CUS_SJ instanceof Array ? CUS_SJX.CUS_SJ : [CUS_SJX.CUS_SJ];
+    return events.map((CUS_SJ) => ({
+        origin: CUS_SJ.CUS_DLLY.attr_value,
+        content: CUS_SJ.CUS_YW.attr_value,
+        date: CUS_SJ.CUS_JTSJ?.attr_value,
+    }));
+}
 
 export const parseFooter = (WW: any): Footer | undefined => {
     if (WW === undefined) {

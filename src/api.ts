@@ -47,6 +47,7 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {json} hits.detail 案件基本情况
  * @apiSuccess {json} hits.analysis 裁判分析过程
  * @apiSuccess {json} hits.result 判决结果
+ * @apiSuccess {json[]} hits.timeline 时间线
  * @apiSuccess {json} hits.footer 文尾
  * @apiSuccessExample {json} Success-Response:
  *  {
@@ -187,6 +188,13 @@ router.get("/info", async (req, res) => {
  *       "result": {
  *         "content": "略"
  *       },
+ *       "timeline": [
+ *         {
+ *           "origin": "查明事实段",
+ *           "content": "本院经审理查明：2011年4月25日，被告韦斌强、杜满萍向原告韦斌姬借款10万元，并共同出具了借条一份，内容为：“今向韦斌姬借人民币拾万元正",
+ *           "date": "2011年4月25日"
+ *         }
+ *       ],
  *       "footer": {
  *         "date": "2017年7月7日",
  *         "year": "2017",
@@ -276,6 +284,7 @@ router.get("/demo/search", async (req, res) => {
  * @apiSuccess {json} detail 案件基本情况
  * @apiSuccess {json} analysis 裁判分析过程
  * @apiSuccess {json} result 判决结果
+ * @apiSuccess {json[]} timeline 时间线
  * @apiSuccess {json} footer 文尾
  * @apiVersion 0.0.1
  */
