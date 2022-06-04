@@ -110,3 +110,16 @@ export interface Analysis {
 export interface Result {
     content: string; // 判决结果
 }
+
+export interface Judge {
+    type: "法官成员" | "审判组织成员";
+    name: string;
+    role: string;
+}
+
+export interface Footer {
+    date?: string; // 结案年月日
+    year?: string; // 结案年度
+    month?: string; // 结案月份
+    judges: Judge[]; // 法官
+}

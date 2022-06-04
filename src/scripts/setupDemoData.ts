@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { XMLParser } from "fast-xml-parser";
 import winston from "winston";
-import { parseAnalysis, parseDetail, parseHead, parsePersons, parseRecord, parseResult } from "./parser";
+import { parseAnalysis, parseDetail, parseFooter, parseHead, parsePersons, parseRecord, parseResult } from "./parser";
 import { client } from "../elastic";
 
 winston.add(new winston.transports.Console({
@@ -24,7 +24,7 @@ const setupDemoData = async () => {
         if (writ === undefined) {
             continue;
         }
-        const { QW: { WS, DSR, SSJL, AJJBQK, CPFXGC, PJJG } } = writ;
+        const { QW: { WS, DSR, SSJL, AJJBQK, CPFXGC, PJJG, WW } } = writ;
         const id = file.replace(".xml", "");
         if (WS.JBFY === undefined) {
             // 可能是检察院
@@ -36,6 +36,7 @@ const setupDemoData = async () => {
         const detail = parseDetail(AJJBQK);
         const analysis = parseAnalysis(CPFXGC);
         const result = parseResult(PJJG);
+        const footer = parseFooter(WW);
 
         await client.index({
             id,
@@ -51,6 +52,7 @@ const setupDemoData = async () => {
                 detail,
                 analysis,
                 result,
+                footer,
             },
         });
     }

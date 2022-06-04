@@ -47,6 +47,7 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {json} hits.detail 案件基本情况
  * @apiSuccess {json} hits.analysis 裁判分析过程
  * @apiSuccess {json} hits.result 判决结果
+ * @apiSuccess {json} hits.footer 文尾
  * @apiSuccessExample {json} Success-Response:
  *  {
  *   "time": 6,
@@ -185,6 +186,28 @@ router.get("/info", async (req, res) => {
  *       },
  *       "result": {
  *         "content": "略"
+ *       },
+ *       "footer": {
+ *         "date": "2017年7月7日",
+ *         "year": "2017",
+ *         "month": "7",
+ *         "judges": [
+ *           {
+ *             "type": "审判组织成员",
+ *             "name": "甘震",
+ *             "role": "审判员"
+ *           },
+ *           {
+ *             "type": "审判组织成员",
+ *             "name": "许天瑶",
+ *             "role": "代书记员"
+ *           },
+ *           {
+ *             "type": "法官成员",
+ *             "name": "甘震",
+ *             "role": "审判员"
+ *           }
+ *         ]
  *       }
  *     }
  *   ]
@@ -245,6 +268,7 @@ router.get("/demo/search", async (req, res) => {
  * @apiSuccess {json} detail 案件基本情况
  * @apiSuccess {json} analysis 裁判分析过程
  * @apiSuccess {json} result 判决结果
+ * @apiSuccess {json} footer 文尾
  * @apiVersion 0.0.1
  */
 router.get("/demo/document/:documentId", async (req, res) => {

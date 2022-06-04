@@ -4,6 +4,8 @@ import {
     Court,
     Detail,
     Document,
+    Footer,
+    Judge,
     Person,
     Persons,
     Prev,
@@ -202,5 +204,34 @@ export const parseResult = (PJJG: any): Result | undefined => {
     }
     return {
         content: PJJG.attr_value,
+    };
+};
+
+export const parseFooter = (WW: any): Footer | undefined => {
+    if (WW === undefined) {
+        return undefined;
+    }
+    const judges: Judge[] = [];
+    const spzzcy: any[] = WW.SPZZCY === undefined ? [] : WW.SPZZCY instanceof Array ? WW.SPZZCY : [WW.SPZZCY];
+    spzzcy.forEach((SPZZCY) => {
+        judges.push({
+            type: "审判组织成员",
+            name: SPZZCY.SPRYXM.attr_value,
+            role: SPZZCY.SPRYJS.attr_value,
+        });
+    });
+    const fgcy: any[] = WW.CUS_FGCY === undefined ? [] : WW.CUS_FGCY instanceof Array ? WW.CUS_FGCY : [WW.CUS_FGCY];
+    fgcy.forEach((CUS_FGCY) => {
+        judges.push({
+            type: "法官成员",
+            name: CUS_FGCY.FGRYXM.attr_value,
+            role: CUS_FGCY.FGRYJS.attr_value,
+        });
+    });
+    return {
+        date: WW.CPSJ?.attr_value,
+        year: WW.CPSJ?.JAND?.attr_value,
+        month: WW.CPSJ?.CUS_JAYF?.attr_value,
+        judges,
     };
 };
