@@ -1,6 +1,7 @@
 import express from "express";
 import { client } from "./elastic";
 import { ResponseError } from "@elastic/transport/lib/errors";
+import { File } from "./types";
 
 const router = express.Router();
 
@@ -37,59 +38,49 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {number} time 查询耗时
  * @apiSuccess {number} count 命中记录总数
  * @apiSuccess {json[]} hits 命中记录
- * @apiSuccess {string} hits.id 序号
- * @apiSuccess {string} hits.title 标题
+ * @apiSuccess {string} hits.id 编号
+ * @apiSuccess {string} hits.content 正文
  * @apiSuccess {json} hits.court 法院信息
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
  * @apiSuccess {json} hits.persons 当事人信息
- * @apiSuccess {json} hits.record 诉讼记录
- * @apiSuccess {json} hits.detail 案件基本情况
- * @apiSuccess {json} hits.analysis 裁判分析过程
- * @apiSuccess {json} hits.result 判决结果
- * @apiSuccess {json[]} hits.timeline 时间线
- * @apiSuccess {json} hits.footer 文尾
  * @apiSuccessExample {json} Success-Response:
  *  {
- *   "time": 6,
- *   "count": 113,
+ *   "time": 8,
+ *   "count": 235,
  *   "hits": [
  *     {
- *       "id": "18697",
- *       "title": "浙江省东阳市人民法院 民事判决书 （2016）浙0783民初17571号",
+ *       "id": "19682",
+ *       "content": "浙江省嵊泗县人民法院 民事判决书 （2015）舟嵊民初字第84号原告王明群为与被告尚记堂健康权纠纷一案，于2015年4月28日诉至本院，本院于同日立案受理后依法由审判员沈洁琼适用简易程序于2015年6月9日公开开庭进行了审理，原告王明群、委托代理人郑泽宇、被告尚记堂均到庭参加诉讼。本案现已审理终结。",
  *       "court": {
- *         "name": "浙江省东阳市人民法院",
- *         "code": "B84",
+ *         "name": "浙江省嵊泗县人民法院",
+ *         "code": "BA4",
  *         "level": "基层",
  *         "province": "浙江",
- *         "city": "金华市"
+ *         "city": "舟山市"
  *       },
  *       "document": {
  *         "name": "民事判决书",
  *         "type": "判决书"
  *       },
  *       "_case": {
- *         "name": "（2016）浙0783民初17571号",
+ *         "name": "（2015）舟嵊民初字第84号",
  *         "token": "民初字",
  *         "type": "民事一审案件",
  *         "primaryType": "民事案件",
  *         "secondaryType": "一审案件",
- *         "year": "2016",
- *         "courtAlias": "浙0783",
- *         "id": "17571"
+ *         "year": "2015",
+ *         "courtAlias": "舟嵊",
+ *         "id": "84"
  *       },
  *       "persons": {
  *         "prosecutors": [
  *           {
- *             "name": "韦斌姬",
+ *             "name": "王明群",
  *             "role": "起诉方",
- *             "description": "原告：韦斌姬，女，1972年9月22日出生，汉族，住东阳市。",
+ *             "description": "原告王明群。",
  *             "status": "原告",
  *             "type": "自然人",
- *             "gender": "女",
- *             "ethnicity": "汉族",
- *             "birthday": "1972年9月22日",
- *             "location": "东阳市",
  *             "nationality": "中国",
  *             "category": "原告",
  *             "identity": "其他"
@@ -97,29 +88,11 @@ router.get("/info", async (req, res) => {
  *         ],
  *         "defendants": [
  *           {
- *             "name": "韦斌强",
+ *             "name": "尚记堂",
  *             "role": "应诉方",
- *             "description": "被告：韦斌强，男，1969年6月17日出生，汉族，住东阳市。",
+ *             "description": "被告尚记堂。",
  *             "status": "被告",
  *             "type": "自然人",
- *             "gender": "男",
- *             "ethnicity": "汉族",
- *             "birthday": "1969年6月17日",
- *             "location": "东阳市",
- *             "nationality": "中国",
- *             "category": "被告",
- *             "identity": "其他"
- *           },
- *           {
- *             "name": "杜满萍",
- *             "role": "应诉方",
- *             "description": "被告：杜满萍，女，1968年11月25日出生，汉族，住东阳市。",
- *             "status": "被告",
- *             "type": "自然人",
- *             "gender": "女",
- *             "ethnicity": "汉族",
- *             "birthday": "1968年11月25日",
- *             "location": "东阳市",
  *             "nationality": "中国",
  *             "category": "被告",
  *             "identity": "其他"
@@ -127,110 +100,35 @@ router.get("/info", async (req, res) => {
  *         ],
  *         "representatives": [
  *           {
- *             "name": "陈菊华",
+ *             "name": "郑力源",
  *             "role": "代理人",
- *             "description": "委托代理人：陈菊华、贾凌珂。",
- *             "status": "委托代理人",
+ *             "description": "委托代理人（特别授权）郑力源，嵊泗县法律援助中心法律援助志愿者。",
+ *             "status": "委托代理人（特别授权）",
  *             "type": "自然人",
  *             "nationality": "中国",
  *             "category": "代理人",
  *             "identity": "其他",
- *             "objects": [
- *               "韦斌强",
- *               "杜满萍"
- *             ],
+ *             "objects": "王明群",
  *             "representationType": "委托代理",
  *             "representativeOccupation": "非法务人员",
  *             "representativeType": "法院许可的其他公民"
  *           },
  *           {
- *             "name": "贾凌珂",
+ *             "name": "郑泽宇",
  *             "role": "代理人",
- *             "description": "委托代理人：陈菊华、贾凌珂。",
- *             "status": "委托代理人",
+ *             "description": "委托代理人（特别授权）郑泽宇，嵊泗县法律援助中心法律援助志愿者。",
+ *             "status": "委托代理人（特别授权）",
  *             "type": "自然人",
  *             "nationality": "中国",
  *             "category": "代理人",
  *             "identity": "其他",
- *             "objects": [
- *               "韦斌强",
- *               "杜满萍"
- *             ],
+ *             "objects": "王明群",
  *             "representationType": "委托代理",
  *             "representativeOccupation": "非法务人员",
  *             "representativeType": "法院许可的其他公民"
  *           }
  *         ],
- *         "joinder": true
- *       },
- *       "record": {
- *         "description": "略",
- *         "cause": "民间借贷纠纷",
- *         "court": true,
- *         "courtInfo": "公开审理",
- *         "courtDate": "2017年7月6日",
- *         "suitDate": "2016年12月1日",
- *         "tribunal": "独任庭",
- *         "single": true,
- *         "convert": false,
- *         "changeProcedure": false,
- *         "prev": [],
- *         "stage": 1,
- *         "source": "新收",
- *         "procedure": "简易程序"
- *       },
- *       "detail": {
- *         "content": "略",
- *         "references": []
- *       },
- *       "analysis": {
- *         "content": "略",
- *         "references": [
- *           {
- *             "name": "《中华人民共和国合同法》",
- *             "clauses": [
- *               {
- *                 "t": "第二百零六条"
- *               },
- *               {
- *                 "t": "第二百零七条"
- *               }
- *             ]
- *           }
- *         ]
- *       },
- *       "result": {
- *         "content": "略",
- *         "references": []
- *       },
- *       "timeline": [
- *         {
- *           "origin": "查明事实段",
- *           "content": "本院经审理查明：2011年4月25日，被告韦斌强、杜满萍向原告韦斌姬借款10万元，并共同出具了借条一份，内容为：“今向韦斌姬借人民币拾万元正",
- *           "date": "2011年4月25日"
- *         }
- *       ],
- *       "footer": {
- *         "date": "2017年7月7日",
- *         "year": "2017",
- *         "month": "7",
- *         "judges": [
- *           {
- *             "type": "审判组织成员",
- *             "name": "甘震",
- *             "role": "审判员"
- *           },
- *           {
- *             "type": "审判组织成员",
- *             "name": "许天瑶",
- *             "role": "代书记员"
- *           },
- *           {
- *             "type": "法官成员",
- *             "name": "甘震",
- *             "role": "审判员"
- *           }
- *         ]
+ *         "joinder": false
  *       }
  *     }
  *   ]
@@ -262,10 +160,11 @@ router.get("/demo/search", async (req, res) => {
     const { took, hits: { total, hits } } = await client.search({
         index: "demo-index",
         query: {
-            match: {
-                title: keyword,
-            }
-        }
+            query_string: {
+                query: keyword,
+                fields: ["title", "record.description", "detail.content", "analysis.content", "result.content"],
+            },
+        },
     }, {
         querystring: {
             from: offset,
@@ -279,7 +178,21 @@ router.get("/demo/search", async (req, res) => {
     res.json({
         time: took,
         count: total.value,
-        hits: hits.map(({ _source }) => _source),
+        hits: hits.map(({ _source }) => {
+            const file: File = _source as File;
+            return {
+                id: file.id,
+                content: file.title +
+                    file.record?.description ?? "" +
+                    file.detail?.content ?? "" +
+                    file.analysis?.content ?? "" +
+                    file.result?.content ?? "",
+                court: file.court,
+                document: file.document,
+                _case: file._case,
+                persons: file.persons,
+            };
+        }),
     });
 });
 
