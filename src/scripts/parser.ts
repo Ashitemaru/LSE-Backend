@@ -1,6 +1,7 @@
 import {
     Analysis,
     Case,
+    Clause,
     Court,
     Detail,
     Document,
@@ -11,6 +12,7 @@ import {
     Persons,
     Prev,
     Record,
+    Reference,
     Representative,
     Result,
 } from "../types";
@@ -181,12 +183,39 @@ export const parseRecord = (SSJL: any) : Record | undefined => {
     }
 };
 
+const parseClauses = (T: any): Clause[] => {
+    const clauses = T === undefined ? [] : T instanceof Array ? T : [T];
+    return clauses.map((t) => ({
+        t: t.attr_value,
+        k: t.K?.attr_value,
+        x: t.X?.attr_value,
+    }));
+};
+
+export const parseReference = (FLFTYY: any): Reference[] => {
+    const references = FLFTYY === undefined ? [] : FLFTYY instanceof Array ? FLFTYY : [FLFTYY];
+    const result: Reference[] = [];
+    references.forEach((r) => {
+        const groups: any[] = r.FLFTFZ === undefined ? [] : r.FLFTFZ instanceof Array ? r.FLFTFZ : [r.FLFTFZ];
+        groups.forEach((g) => {
+            if (g.MC !== undefined) {
+                result.push({
+                    name: g.MC.attr_value,
+                    clauses: parseClauses(g.T),
+                });
+            }
+        });
+    });
+    return result;
+};
+
 export const parseDetail = (AJJBQK: any): Detail | undefined => {
     if (AJJBQK === undefined) {
         return undefined;
     }
     return {
         content: AJJBQK.attr_value,
+        references: parseReference(AJJBQK.FLFTYY),
     };
 };
 
@@ -196,6 +225,7 @@ export const parseAnalysis = (CPFXGC: any): Analysis | undefined => {
     }
     return {
         content: CPFXGC.attr_value,
+        references: parseReference(CPFXGC.FLFTYY),
     };
 };
 
@@ -205,6 +235,7 @@ export const parseResult = (PJJG: any): Result | undefined => {
     }
     return {
         content: PJJG.attr_value,
+        references: parseReference(PJJG.FLFTYY),
     };
 };
 
@@ -215,7 +246,7 @@ export const parseTimeline = (CUS_SJX: any): Event[] => {
         content: CUS_SJ.CUS_YW.attr_value,
         date: CUS_SJ.CUS_JTSJ?.attr_value,
     }));
-}
+};
 
 export const parseFooter = (WW: any): Footer | undefined => {
     if (WW === undefined) {

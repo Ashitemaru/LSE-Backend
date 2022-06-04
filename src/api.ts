@@ -180,13 +180,28 @@ router.get("/info", async (req, res) => {
  *         "procedure": "简易程序"
  *       },
  *       "detail": {
- *         "content": "略"
+ *         "content": "略",
+ *         "references": []
  *       },
  *       "analysis": {
- *         "content": "略"
+ *         "content": "略",
+ *         "references": [
+ *           {
+ *             "name": "《中华人民共和国合同法》",
+ *             "clauses": [
+ *               {
+ *                 "t": "第二百零六条"
+ *               },
+ *               {
+ *                 "t": "第二百零七条"
+ *               }
+ *             ]
+ *           }
+ *         ]
  *       },
  *       "result": {
- *         "content": "略"
+ *         "content": "略",
+ *         "references": []
  *       },
  *       "timeline": [
  *         {

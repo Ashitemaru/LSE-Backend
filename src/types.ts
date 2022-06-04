@@ -99,16 +99,30 @@ export interface RecordStageUnknown extends RecordBase {
 
 export type Record = RecordStageOne | RecordStageTwo | RecordStageUnknown;
 
+export interface Clause {
+    t: string; // 条
+    k?: string; // 款
+    x?: string; // 项
+}
+
+export interface Reference {
+    name: string; // 法律法条引用名称
+    clauses: Clause[]; // 法律法条引用条款
+}
+
 export interface Detail {
     content: string; // 案件基本情况
+    references: Reference[]; // 法律法条引用
 }
 
 export interface Analysis {
     content: string; // 裁判分析过程
+    references: Reference[]; // 法律法条引用
 }
 
 export interface Result {
     content: string; // 判决结果
+    references: Reference[]; // 法律法条引用
 }
 
 export interface Judge {
