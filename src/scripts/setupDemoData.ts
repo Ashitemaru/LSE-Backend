@@ -38,6 +38,7 @@ const setupDemoData = async () => {
         const result = parseResult(PJJG);
 
         await client.index({
+            id,
             index: "demo-index",
             document: {
                 id,

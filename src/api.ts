@@ -1,5 +1,6 @@
 import express from "express";
 import { client } from "./elastic";
+import { ResponseError } from "@elastic/transport/lib/errors";
 
 const router = express.Router();
 
@@ -226,6 +227,41 @@ router.get("/demo/search", async (req, res) => {
         count: hits.length,
         hits: hits.map(({ _source }) => _source),
     });
+});
+
+/**
+ * @api {get} /api/demo/document/:id 查找指定编号的 demo 文档
+ * @apiDescription 查找指定编号的 demo 文档
+ * @apiName demo-document-id
+ * @apiGroup demo
+ * @apiParam {string} id demo 文档编号
+ * @apiSuccess {string} id 序号
+ * @apiSuccess {string} title 标题
+ * @apiSuccess {json} court 法院信息
+ * @apiSuccess {json} document 文书信息
+ * @apiSuccess {json} _case 案件信息
+ * @apiSuccess {json} persons 当事人信息
+ * @apiSuccess {json} record 诉讼记录
+ * @apiSuccess {json} detail 案件基本情况
+ * @apiSuccess {json} analysis 裁判分析过程
+ * @apiSuccess {json} result 判决结果
+ * @apiVersion 0.0.1
+ */
+router.get("/demo/document/:documentId", async (req, res) => {
+    const { documentId } = req.params;
+    try {
+        const { _source } = await client.get({
+            index: "demo-index",
+            id: documentId,
+        });
+        res.json(_source);
+    } catch (e: any) {
+        if (e instanceof ResponseError && e.meta.statusCode === 404) {
+            res.status(404).json({ msg: "Document not found." });
+        } else {
+            res.status(500).json({ msg: e?.message });
+        }
+    }
 });
 
 export default router;
