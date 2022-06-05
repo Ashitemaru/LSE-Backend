@@ -295,6 +295,10 @@ export const parseFile = (filename: string, writ: any): File => {
     if (featureVector === undefined) {
         throw new Error(`Feature vector of document ${id} is undefined!`);
     }
+    const prosecutors = persons?.prosecutors?.map((p) => p.name) ?? [];
+    const defendants = persons?.defendants.map((p) => p.name) ?? [];
+    const representatives = persons?.representatives.map((p) => p.name) ?? [];
+    const personSet = Array.from(new Set(prosecutors.concat(defendants).concat(representatives)));
     return {
         id,
         title,
@@ -310,6 +314,7 @@ export const parseFile = (filename: string, writ: any): File => {
         timeline,
         footer,
         cause: record?.cause,
+        personSet,
         featureVector,
     };
 };

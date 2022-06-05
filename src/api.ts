@@ -263,6 +263,7 @@ router.get("/demo/document/:documentId", async (req, res) => {
         res.json({
             ...(_source as File),
             cause: undefined,
+            personSet: undefined,
             featureVector: undefined,
         });
     } catch (e: any) {
@@ -387,6 +388,8 @@ router.post("/demo/search/similar", async (req, res) => {
 /**
  * @api {get} /api/demo/search/advanced 对 demo 数据进行高级搜索
  * @apiDescription 对 demo 数据进行高级搜索
+ *
+ * 注意各个查询字段之间是“与”的关系
  * @apiName demo-search-advanced
  * @apiGroup demo
  * @apiQuery {string} [province] 省份
@@ -395,6 +398,8 @@ router.post("/demo/search/similar", async (req, res) => {
  * @apiQuery {string} [name] 案件名称（注意是 _case.name）
  * @apiQuery {string} [year] 案件年份
  * @apiQuery {string} [cause] 案由
+ * @apiQuery {string} [person] 当事人，多名当事人之间用','分隔
+ * @apiQuery {string} [judge] 法官，多名法官之间用','分隔
  * @apiQuery {number} limit=10 查询记录数量上限
  * @apiQuery {number} offset=0 查询起始记录偏移量
  * @apiSuccess {number} time 查询耗时
@@ -419,7 +424,10 @@ router.get("/demo/search/advanced", async (req, res) => {
         name: "_case.name",
         year: "_case.year",
         cause: "cause",
+        person: "personSet",
+        judge: "footer.judges.name",
     } as const;
+    const allowMultiple = ["person", "judge"] as (keyof typeof queryToField)[];
     const must: {"term": {[key: string]: string}}[] = [];
     for (const q of Object.keys(queryToField) as (keyof typeof queryToField)[]) {
         if (req.query[q] !== undefined && req.query[q] !== "") {
@@ -428,9 +436,12 @@ router.get("/demo/search/advanced", async (req, res) => {
                 res.status(400).json({ msg: `Query param \`${q}\` shall be a string.` });
                 return;
             }
-            const term: {[key: string]: string} = {};
-            term[queryToField[q]] = qValue;
-            must.push({ term });
+            const qValues = allowMultiple.includes(q) ? qValue.split(",") : [qValue];
+            for (const v of qValues) {
+                const term: { [key: string]: string } = {};
+                term[queryToField[q]] = v;
+                must.push({ term });
+            }
         }
     }
     const { took, hits: { total, hits } } = await client.search({

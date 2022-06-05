@@ -158,6 +158,7 @@ export interface File {
     result?: Result; // 判决结果
     timeline: Event[]; // 时间线
     footer?: Footer; // 文尾
-    cause?: string; // 案由
-    featureVector: number[]; // 文本特征向量
+    cause?: string; // 案由，前端不用
+    personSet: string[]; // 当事人集合（列表），前端不用
+    featureVector: number[]; // 文本特征向量，前端不用
 }

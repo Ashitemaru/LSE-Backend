@@ -62,8 +62,22 @@ const setupDemoData = async () => {
                     analysis: { type: "object" },
                     result: { type: "object" },
                     timeline: { type: "object" },
-                    footer: { type: "object" },
+                    footer: {
+                        properties: {
+                            date: { type: "keyword" },
+                            year: { type: "keyword" },
+                            month: { type: "keyword" },
+                            judges: {
+                                properties: {
+                                    type: { type: "keyword" },
+                                    name: { type: "keyword" },
+                                    role: { type: "keyword" },
+                                },
+                            },
+                        },
+                    },
                     cause: { type: "keyword" },
+                    personSet: { type: "keyword" },
                     featureVector: {
                         type: "dense_vector",
                         dims: 300,
