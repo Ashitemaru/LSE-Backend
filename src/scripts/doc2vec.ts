@@ -3,7 +3,7 @@ import { cutForSearch } from "nodejieba";
 import winston from "winston";
 
 interface Model{
-    w2v: Map<string, number[]>;
+    w2v: Map<string, Float32Array>;
     size: number;
     dim: number;
 }
@@ -21,7 +21,7 @@ export const loadModel = async () => {
         winston.info("Loading word2vec model...");
         const begin = Date.now();
         model = await new Promise<Model>((resolve, reject) => {
-            const w2v = new Map<string, number[]>();
+            const w2v = new Map<string, Float32Array>();
             let size: number;
             let dim: number;
             eachLine("./word2vec/sgns.wiki.bigram-char.txt", (line, last) => {
@@ -44,7 +44,7 @@ export const loadModel = async () => {
                     }
                     return v;
                 });
-                w2v.set(word, vector);
+                w2v.set(word, new Float32Array(vector));
                 if (last) {
                     if (w2v.size !== size) {
                         throw new Error(`w2v size mismatch! Expected ${size}, found ${w2v.size}`);
@@ -62,17 +62,17 @@ export const loadModel = async () => {
 
 export const doc2vec = (doc: string): number[] | undefined => {
     ensureModelLoaded();
-    const vectors: number[][] = cutForSearch(doc)
+    const vectors: Float32Array[] = cutForSearch(doc)
         .map((word) => model.w2v.get(word))
-        .filter((v) => v !== undefined) as number[][];
+        .filter((v) => v !== undefined) as Float32Array[];
     if (vectors.length === 0) {
         return undefined;
     }
-    const result = new Array(model.dim).fill(0);
+    const result = new Float32Array(model.dim);
     for (const vector of vectors) {
         for (let i = 0; i < model.dim; i++) {
             result[i] += vector[i];
         }
     }
-    return result.map((v) => v / vectors.length);
+    return Array.from(result, (v) => v / vectors.length);
 };
