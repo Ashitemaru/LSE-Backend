@@ -29,9 +29,33 @@ const setupDemoData = async () => {
                         analyzer: "ik_max_word",
                         search_analyzer: "ik_smart",
                     },
-                    court: { type: "object" },
-                    document: { type: "object" },
-                    _case: { type: "object" },
+                    court: {
+                        properties: {
+                            name: { type: "keyword" },
+                            code: { type: "keyword" },
+                            level: { type: "keyword" },
+                            province: { type: "keyword" },
+                            city: { type: "keyword" },
+                        },
+                    },
+                    document: {
+                        properties: {
+                            name: { type: "keyword" },
+                            type: { type: "keyword" },
+                        },
+                    },
+                    _case: {
+                        properties: {
+                            name: { type: "keyword" },
+                            token: { type: "keyword" },
+                            type: { type: "keyword" },
+                            primaryType: { type: "keyword" },
+                            secondaryType: { type: "keyword" },
+                            year: { type: "keyword" },
+                            courtAlias: { type: "keyword" },
+                            id: { type: "keyword" },
+                        },
+                    },
                     persons: { type: "object" },
                     record: { type: "object" },
                     detail: { type: "object" },

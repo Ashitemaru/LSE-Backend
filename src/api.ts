@@ -3,8 +3,25 @@ import { client } from "./elastic";
 import { ResponseError } from "@elastic/transport/lib/errors";
 import { File } from "./types";
 import { doc2vec } from "./scripts/doc2vec";
+import { Request, Response } from "express-serve-static-core";
 
 const router = express.Router();
+
+const checkLimitOffset = (req:Request, res:Response): boolean => {
+    if (typeof req.query.limit === "string" && isNaN(Number(req.query.limit))) {
+        res.status(400).json({ msg: "Query param `limit` shall be numeric." });
+        return false;
+    }
+    if (typeof req.query.offset === "string" && isNaN(Number(req.query.offset))) {
+        res.status(400).json({ msg: "Query param `offset` shall be numeric." });
+        return false;
+    }
+    if (Number(req.query.limit) > 200 || Number(req.query.offset) + Number(req.query.limit) > 500) {
+        res.status(400).json({ msg: "Query param `limit` and/or `offset` is too large." });
+        return false;
+    }
+    return true;
+};
 
 /**
  * @api {get} /api/info 获取系统基本信息
@@ -166,16 +183,7 @@ router.get("/demo/search", async (req, res) => {
         res.status(400).json({ msg: "Query param `keyword` is required." });
         return;
     }
-    if (typeof req.query.limit === "string" && isNaN(Number(req.query.limit))) {
-        res.status(400).json({ msg: "Query param `limit` shall be numeric." });
-        return;
-    }
-    if (typeof req.query.offset === "string" && isNaN(Number(req.query.offset))) {
-        res.status(400).json({ msg: "Query param `offset` shall be numeric." });
-        return;
-    }
-    if (Number(req.query.limit) > 200 || Number(req.query.offset) + Number(req.query.limit) > 500) {
-        res.status(400).json({ msg: "Query param `limit` and/or `offset` is too large." });
+    if (!checkLimitOffset(req, res)) {
         return;
     }
     if (!await client.indices.exists({ index: "demo-index" })) {
@@ -367,6 +375,83 @@ router.post("/demo/search/similar", async (req, res) => {
                 court: file.court,
                 document: file.document,
                 _case: file._case,
+            };
+        }),
+    });
+});
+
+/**
+ * @api {get} /api/demo/search/advanced 对 demo 数据进行高级搜索
+ * @apiDescription 对 demo 数据进行高级搜索
+ * @apiName demo-search-advanced
+ * @apiGroup demo
+ * @apiQuery {string} [province] 省份
+ * @apiQuery {string} [city] 城市
+ * @apiQuery {string} [type] 文书类型
+ * @apiQuery {string} [name] 案件名称（注意是 _case.name）
+ * @apiQuery {string} [year] 案件年份
+ * @apiQuery {number} limit=10 查询记录数量上限
+ * @apiQuery {number} offset=0 查询起始记录偏移量
+ * @apiSuccess {number} time 查询耗时
+ * @apiSuccess {number} count 命中记录总数
+ * @apiSuccess {json[]} hits 命中记录
+ * @apiSuccess {string} hits.id 编号
+ * @apiSuccess {json} hits.court 法院信息
+ * @apiSuccess {json} hits.document 文书信息
+ * @apiSuccess {json} hits._case 案件信息
+ * @apiSuccess {json} hits.persons 当事人信息
+ * @apiSuccess {json} hits.footer 文尾
+ * @apiVersion 0.0.1
+ */
+router.get("/demo/search/advanced", async (req, res) => {
+    if (!checkLimitOffset(req, res)) {
+        return;
+    }
+    const queryToField = {
+        province: "court.province",
+        city: "court.city",
+        type: "document.type",
+        name: "_case.name",
+        year: "_case.year",
+    } as const;
+    const must: {"term": {[key: string]: string}}[] = [];
+    for (const q of Object.keys(queryToField) as (keyof typeof queryToField)[]) {
+        if (req.query[q] !== undefined && req.query[q] !== "") {
+            const qValue = req.query[q];
+            if (typeof qValue !== "string") {
+                res.status(400).json({ msg: `Query param \`${q}\` shall be a string.` });
+                return;
+            }
+            const term: {[key: string]: string} = {};
+            term[queryToField[q]] = qValue;
+            must.push({ term });
+        }
+    }
+    const { took, hits: { total, hits } } = await client.search({
+        index: "demo-index",
+        query: { bool: { must } },
+    }, {
+        querystring: {
+            from: req.query.offset,
+            size: req.query.limit,
+        }
+    });
+    if (total === undefined || typeof total === "number") {
+        res.status(500).json({ msg: "Unexpected type of field `total`." });
+        return;
+    }
+    res.json({
+        time: took,
+        count: total.value,
+        hits: hits.map(({ _source }) => {
+            const file: File = _source as File;
+            return {
+                id: file.id,
+                court: file.court,
+                document: file.document,
+                _case: file._case,
+                persons: file.persons,
+                footer: file.footer,
             };
         }),
     });
