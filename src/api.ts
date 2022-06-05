@@ -40,7 +40,7 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {number} count 命中记录总数
  * @apiSuccess {json[]} hits 命中记录
  * @apiSuccess {string} hits.id 编号
- * @apiSuccess {string} hits.content 正文
+ * @apiSuccess {string} hits.content 正文缩略信息，带高亮
  * @apiSuccess {json} hits.court 法院信息
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
