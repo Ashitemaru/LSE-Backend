@@ -3,6 +3,7 @@ import add from "@stdlib/math-strided-ops-add";
 import { eachLine } from "line-reader";
 import { cutForSearch } from "nodejieba";
 import winston from "winston";
+import { SingleBar } from "cli-progress";
 
 interface Model{
     w2v: Map<string, Float32Array>;
@@ -26,11 +27,13 @@ export const loadModel = async () => {
             const w2v = new Map<string, Float32Array>();
             let size: number;
             let dim: number;
+            const bar = new SingleBar({});
             eachLine("./word2vec/sgns.wiki.bigram-char.txt", (line, last) => {
                 const [word, ...data] = line.trimEnd().split(" ");
                 if (data.length === 1) {
                     size = Number(word);
                     dim = Number(data[0]);
+                    bar.start(size, 0);
                     return;
                 }
                 if (dim === undefined || size === undefined) {
@@ -47,7 +50,9 @@ export const loadModel = async () => {
                     return v;
                 });
                 w2v.set(word, new Float32Array(vector));
+                bar.increment(1);
                 if (last) {
+                    bar.stop();
                     if (w2v.size !== size) {
                         throw new Error(`w2v size mismatch! Expected ${size}, found ${w2v.size}`);
                     }
