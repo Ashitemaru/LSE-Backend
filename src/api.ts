@@ -301,6 +301,7 @@ router.post("/demo/search/similar", async (req, res) => {
     const queryVector = doc2vec(document);
     if (queryVector === undefined) {
         res.status(400).json({ msg: "Post body param `document` shall not be empty." });
+        return;
     }
     const { took, hits: { total, hits } } = await client.search({
         index: "demo-index",
