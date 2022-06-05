@@ -191,6 +191,11 @@ router.get("/demo/search", async (req, res) => {
                 fields: ["content"],
             },
         },
+        highlight: {
+            fields: {
+                content: {},
+            },
+        },
     }, {
         querystring: {
             from: offset,
@@ -204,11 +209,11 @@ router.get("/demo/search", async (req, res) => {
     res.json({
         time: took,
         count: total.value,
-        hits: hits.map(({ _source, _score }) => {
+        hits: hits.map(({ _source, _score, highlight }) => {
             const file: File = _source as File;
             return {
                 id: file.id,
-                content: file.content,
+                content: "..." + (highlight?.content[0] ?? file.content.slice(100, 150)) + "...",
                 court: file.court,
                 document: file.document,
                 _case: file._case,
