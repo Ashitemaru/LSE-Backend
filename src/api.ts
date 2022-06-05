@@ -163,7 +163,7 @@ router.get("/demo/search", async (req, res) => {
         query: {
             query_string: {
                 query: keyword,
-                fields: ["title", "record.description", "detail.content", "analysis.content", "result.content"],
+                fields: ["content"],
             },
         },
     }, {
@@ -183,11 +183,7 @@ router.get("/demo/search", async (req, res) => {
             const file: File = _source as File;
             return {
                 id: file.id,
-                content: file.title +
-                    file.record?.description ?? "" +
-                    file.detail?.content ?? "" +
-                    file.analysis?.content ?? "" +
-                    file.result?.content ?? "",
+                content: file.content,
                 court: file.court,
                 document: file.document,
                 _case: file._case,
