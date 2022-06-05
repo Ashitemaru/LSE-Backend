@@ -63,6 +63,7 @@ const setupDemoData = async () => {
                     result: { type: "object" },
                     timeline: { type: "object" },
                     footer: { type: "object" },
+                    cause: { type: "keyword" },
                     featureVector: {
                         type: "dense_vector",
                         dims: 300,

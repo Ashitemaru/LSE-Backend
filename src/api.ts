@@ -260,7 +260,11 @@ router.get("/demo/document/:documentId", async (req, res) => {
             index: "demo-index",
             id: documentId,
         });
-        res.json(_source);
+        res.json({
+            ...(_source as File),
+            cause: undefined,
+            featureVector: undefined,
+        });
     } catch (e: any) {
         if (e instanceof ResponseError && e.meta.statusCode === 404) {
             res.status(404).json({ msg: "Document not found." });
@@ -390,6 +394,7 @@ router.post("/demo/search/similar", async (req, res) => {
  * @apiQuery {string} [type] 文书类型
  * @apiQuery {string} [name] 案件名称（注意是 _case.name）
  * @apiQuery {string} [year] 案件年份
+ * @apiQuery {string} [cause] 案由
  * @apiQuery {number} limit=10 查询记录数量上限
  * @apiQuery {number} offset=0 查询起始记录偏移量
  * @apiSuccess {number} time 查询耗时
@@ -413,6 +418,7 @@ router.get("/demo/search/advanced", async (req, res) => {
         type: "document.type",
         name: "_case.name",
         year: "_case.year",
+        cause: "cause",
     } as const;
     const must: {"term": {[key: string]: string}}[] = [];
     for (const q of Object.keys(queryToField) as (keyof typeof queryToField)[]) {

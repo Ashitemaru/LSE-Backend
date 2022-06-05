@@ -309,6 +309,7 @@ export const parseFile = (filename: string, writ: any): File => {
         result,
         timeline,
         footer,
+        cause: record?.cause,
         featureVector,
     };
 };
