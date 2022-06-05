@@ -160,5 +160,6 @@ export interface File {
     footer?: Footer; // 文尾
     cause?: string; // 案由，前端不用
     personSet: string[]; // 当事人集合（列表），前端不用
+    referenceSet: string[]; // 引用条目集合（列表），前端不用
     featureVector: number[]; // 文本特征向量，前端不用
 }

@@ -78,6 +78,7 @@ const setupDemoData = async () => {
                     },
                     cause: { type: "keyword" },
                     personSet: { type: "keyword" },
+                    referenceSet: { type: "keyword" },
                     featureVector: {
                         type: "dense_vector",
                         dims: 300,

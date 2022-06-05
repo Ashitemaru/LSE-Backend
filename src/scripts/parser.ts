@@ -299,6 +299,10 @@ export const parseFile = (filename: string, writ: any): File => {
     const defendants = persons?.defendants.map((p) => p.name) ?? [];
     const representatives = persons?.representatives.map((p) => p.name) ?? [];
     const personSet = Array.from(new Set(prosecutors.concat(defendants).concat(representatives)));
+    const detailReferences = detail?.references.map((r) => r.name) ?? [];
+    const analysisReferences = analysis?.references.map((r) => r.name) ?? [];
+    const resultReferences = result?.references.map((r) => r.name) ?? [];
+    const referenceSet = Array.from(new Set(detailReferences.concat(analysisReferences).concat(resultReferences)));
     return {
         id,
         title,
@@ -315,6 +319,7 @@ export const parseFile = (filename: string, writ: any): File => {
         footer,
         cause: record?.cause,
         personSet,
+        referenceSet,
         featureVector,
     };
 };
