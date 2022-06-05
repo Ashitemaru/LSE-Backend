@@ -12,6 +12,7 @@ winston.add(new winston.transports.Console({
 }));
 
 const setupDemoData = async () => {
+    let count = 0;
     await loadModel();
     if (await client.indices.exists({ index: "demo-index" })) {
         await client.indices.delete({ index: "demo-index" });
@@ -68,9 +69,11 @@ const setupDemoData = async () => {
             index: "demo-index",
             document: file,
         });
+        ++count;
     }
     bar.stop();
     await client.indices.refresh({ index: "demo-index" });
+    winston.info(`Successfully loaded demo data. ${filesSelected.length - count} file(s) are skipped.`);
 };
 
 setupDemoData().catch(winston.error);
