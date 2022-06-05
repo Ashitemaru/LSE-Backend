@@ -76,4 +76,5 @@ const setupDemoData = async () => {
     winston.info(`Successfully loaded demo data. ${filesSelected.length - count} file(s) are skipped.`);
 };
 
-setupDemoData().catch(winston.error);
+// eslint-disable-next-line no-console
+setupDemoData().catch(console.error);
