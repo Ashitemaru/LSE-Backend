@@ -1,3 +1,5 @@
+import Float32Array from "@stdlib/array-float32";
+import add from "@stdlib/math-strided-ops-add";
 import { eachLine } from "line-reader";
 import { cutForSearch } from "nodejieba";
 import winston from "winston";
@@ -70,9 +72,7 @@ export const doc2vec = (doc: string): number[] | undefined => {
     }
     const result = new Float32Array(model.dim);
     for (const vector of vectors) {
-        for (let i = 0; i < model.dim; i++) {
-            result[i] += vector[i];
-        }
+        add(model.dim, "float32", result, 1, "float32", vector, 1, "float32", result, 1);
     }
     return Array.from(result, (v) => v / vectors.length);
 };
