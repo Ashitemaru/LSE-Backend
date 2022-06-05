@@ -45,6 +45,8 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
  * @apiSuccess {json} hits.persons 当事人信息
+ * @apiSuccess {json} hits.footer 文尾
+ * @apiSuccess {number} hits.score 搜索结果得分
  * @apiSuccessExample {json} Success-Response:
  *  {
  *   "time": 8,
@@ -130,7 +132,30 @@ router.get("/info", async (req, res) => {
  *           }
  *         ],
  *         "joinder": false
- *       }
+ *       },
+ *       "footer": {
+ *         "date": "2015年6月17日",
+ *         "year": "2015",
+ *         "month": "6",
+ *         "judges": [
+ *           {
+ *             "type": "审判组织成员",
+ *             "name": "沈洁琼",
+ *             "role": "审判员"
+ *           },
+ *           {
+ *             "type": "审判组织成员",
+ *             "name": "陈燕燕",
+ *             "role": "代书记员"
+ *           },
+ *           {
+ *             "type": "法官成员",
+ *             "name": "沈洁琼",
+ *             "role": "审判员"
+ *           }
+ *         ]
+ *       },
+ *       "score": 57.433887
  *     }
  *   ]
  * }
@@ -179,7 +204,7 @@ router.get("/demo/search", async (req, res) => {
     res.json({
         time: took,
         count: total.value,
-        hits: hits.map(({ _source }) => {
+        hits: hits.map(({ _source, _score }) => {
             const file: File = _source as File;
             return {
                 id: file.id,
@@ -188,6 +213,8 @@ router.get("/demo/search", async (req, res) => {
                 document: file.document,
                 _case: file._case,
                 persons: file.persons,
+                footer: file.footer,
+                score: _score,
             };
         }),
     });
