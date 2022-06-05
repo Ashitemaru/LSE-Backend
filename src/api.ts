@@ -28,13 +28,13 @@ router.get("/info", async (req, res) => {
 });
 
 /**
- * @api {get} /api/demo/search 对 demo 数据进行标题查询
- * @apiDescription 对 demo 数据进行标题查询
+ * @api {get} /api/demo/search 对 demo 数据进行全文查询
+ * @apiDescription 对 demo 数据进行全文查询
  * @apiName demo-search
  * @apiGroup demo
  * @apiQuery {string} keyword 查询的关键词
- * @apiQuery {string} limit=10 查询记录数量上限
- * @apiQuery {string} offset=0 查询起始记录偏移量
+ * @apiQuery {number} limit=10 查询记录数量上限
+ * @apiQuery {number} offset=0 查询起始记录偏移量
  * @apiSuccess {number} time 查询耗时
  * @apiSuccess {number} count 命中记录总数
  * @apiSuccess {json[]} hits 命中记录
@@ -51,7 +51,7 @@ router.get("/info", async (req, res) => {
  *   "hits": [
  *     {
  *       "id": "19682",
- *       "content": "浙江省嵊泗县人民法院 民事判决书 （2015）舟嵊民初字第84号原告王明群为与被告尚记堂健康权纠纷一案，于2015年4月28日诉至本院，本院于同日立案受理后依法由审判员沈洁琼适用简易程序于2015年6月9日公开开庭进行了审理，原告王明群、委托代理人郑泽宇、被告尚记堂均到庭参加诉讼。本案现已审理终结。",
+ *       "content": "略",
  *       "court": {
  *         "name": "浙江省嵊泗县人民法院",
  *         "code": "BA4",
