@@ -55,6 +55,7 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
+      - ${PLUGINS_PATH}:/usr/share/elasticsearch/plugins
     environment:
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}

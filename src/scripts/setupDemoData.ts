@@ -24,7 +24,11 @@ const setupDemoData = async () => {
                 properties: {
                     id: { type: "keyword" },
                     title: { type: "text" },
-                    content: { type: "text" },
+                    content: {
+                        type: "text",
+                        analyzer: "ik_max_word",
+                        search_analyzer: "ik_smart",
+                    },
                     court: { type: "object" },
                     document: { type: "object" },
                     _case: { type: "object" },
