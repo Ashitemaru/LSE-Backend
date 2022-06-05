@@ -16,9 +16,35 @@ const setupDemoData = async () => {
     if (await client.indices.exists({ index: "demo-index" })) {
         await client.indices.delete({ index: "demo-index" });
     }
+    await client.indices.create({
+        index: "demo-index",
+        body: {
+            mappings: {
+                properties: {
+                    id: { type: "keyword" },
+                    title: { type: "text" },
+                    content: { type: "text" },
+                    court: { type: "object" },
+                    document: { type: "object" },
+                    _case: { type: "object" },
+                    persons: { type: "object" },
+                    record: { type: "object" },
+                    detail: { type: "object" },
+                    analysis: { type: "object" },
+                    result: { type: "object" },
+                    timeline: { type: "object" },
+                    footer: { type: "object" },
+                    featureVector: {
+                        type: "dense_vector",
+                        dims: 300,
+                    },
+                },
+            },
+        },
+    });
     const files = await fs.promises.readdir("dataset");
     const limit = process.argv[2] === undefined ? files.length : Number(process.argv[2]);
-    const filesSelected = files.slice(0, limit)
+    const filesSelected = files.slice(0, limit);
     const bar = new SingleBar({});
     bar.start(filesSelected.length, 0);
     for (const filename of filesSelected) {

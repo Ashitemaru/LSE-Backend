@@ -283,6 +283,7 @@ export const parseFile = (filename: string, writ: any): File => {
     const id = filename.replace(".xml", "");
     const { QW: { WS, DSR, SSJL, AJJBQK, CPFXGC, PJJG, WW, CUS_SJX } } = writ;
     const { title, court, document, _case } = parseHead(WS);
+    const content = writ.QW.attr_value;
     const persons = parsePersons(DSR);
     const record = parseRecord(SSJL);
     const detail = parseDetail(AJJBQK);
@@ -290,10 +291,14 @@ export const parseFile = (filename: string, writ: any): File => {
     const result = parseResult(PJJG);
     const footer = parseFooter(WW);
     const timeline = parseTimeline(CUS_SJX);
-    const featureVector = doc2vec(writ.QW.attr_value);
+    const featureVector = doc2vec(content);
+    if (featureVector === undefined) {
+        throw new Error(`Feature vector of document ${id} is undefined!`);
+    }
     return {
         id,
         title,
+        content,
         court,
         document,
         _case,

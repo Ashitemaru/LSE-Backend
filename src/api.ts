@@ -2,6 +2,7 @@ import express from "express";
 import { client } from "./elastic";
 import { ResponseError } from "@elastic/transport/lib/errors";
 import { File } from "./types";
+import { doc2vec } from "./scripts/doc2vec";
 
 const router = express.Router();
 
@@ -231,6 +232,115 @@ router.get("/demo/document/:documentId", async (req, res) => {
             res.status(500).json({ msg: e?.message });
         }
     }
+});
+
+/**
+ * @api {post} /api/demo/search/similar 对 demo 数据进行相似文本查询
+ * @apiDescription 对 demo 数据进行相似文本查询
+ * @apiName demo-search-similar
+ * @apiGroup demo
+ * @apiBody {string} document 查询文本
+ * @apiBody {number} limit=10 查询记录数量上限
+ * @apiBody {number} offset=0 查询起始记录偏移量
+ * @apiSuccess {number} time 查询耗时
+ * @apiSuccess {number} count 命中记录总数
+ * @apiSuccess {json[]} hits 命中记录
+ * @apiSuccess {string} hits.id 编号
+ * @apiSuccess {string} hits.content 正文
+ * @apiSuccess {json} hits.court 法院信息
+ * @apiSuccess {json} hits.document 文书信息
+ * @apiSuccess {json} hits._case 案件信息
+ * @apiSuccessExample {json} Success-Response:
+ *  {
+ *   "time": 8,
+ *   "count": 235,
+ *   "hits": [
+ *     {
+ *       "id": "19682",
+ *       "content": "略",
+ *       "court": {
+ *         "name": "浙江省嵊泗县人民法院",
+ *         "code": "BA4",
+ *         "level": "基层",
+ *         "province": "浙江",
+ *         "city": "舟山市"
+ *       },
+ *       "document": {
+ *         "name": "民事判决书",
+ *         "type": "判决书"
+ *       },
+ *       "_case": {
+ *         "name": "（2015）舟嵊民初字第84号",
+ *         "token": "民初字",
+ *         "type": "民事一审案件",
+ *         "primaryType": "民事案件",
+ *         "secondaryType": "一审案件",
+ *         "year": "2015",
+ *         "courtAlias": "舟嵊",
+ *         "id": "84"
+ *       }
+ *     }
+ *   ]
+ * }
+ * @apiVersion 0.0.1
+ */
+router.post("/demo/search/similar", async (req, res) => {
+    const { document, limit, offset } = req.body;
+    if (typeof document !== "string") {
+        res.status(400).json({ msg: "Post body param `document` is required." });
+        return;
+    }
+    if (typeof limit === "string" && isNaN(Number(limit))) {
+        res.status(400).json({ msg: "Post body param `limit` shall be numeric." });
+        return;
+    }
+    if (typeof offset === "string" && isNaN(Number(offset))) {
+        res.status(400).json({ msg: "Post body param `offset` shall be numeric." });
+        return;
+    }
+    if (Number(limit) > 200 || Number(offset) + Number(limit) > 500) {
+        res.status(400).json({ msg: "Post body param `limit` and/or `offset` is too large." });
+        return;
+    }
+    const queryVector = doc2vec(document);
+    if (queryVector === undefined) {
+        res.status(400).json({ msg: "Post body param `document` shall not be empty." });
+    }
+    const { took, hits: { total, hits } } = await client.search({
+        index: "demo-index",
+        query: {
+            script_score: {
+                query: { match_all: {} },
+                script: {
+                    source: "cosineSimilarity(params.queryVector, 'featureVector') + 1.0",
+                    params: { queryVector },
+                }
+            }
+        },
+    }, {
+        querystring: {
+            from: offset,
+            size: limit,
+        }
+    });
+    if (total === undefined || typeof total === "number") {
+        res.status(500).json({ msg: "Unexpected type of field `total`." });
+        return;
+    }
+    res.json({
+        time: took,
+        count: total.value,
+        hits: hits.map(({ _source }) => {
+            const file: File = _source as File;
+            return {
+                id: file.id,
+                content: file.content,
+                court: file.court,
+                document: file.document,
+                _case: file._case,
+            };
+        }),
+    });
 });
 
 export default router;

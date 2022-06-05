@@ -147,6 +147,7 @@ export interface Footer {
 export interface File {
     id: string; // 文件编号
     title: string; // 文件标题
+    content: string; // 文件正文
     court: Court; // 法院信息
     document: Document; // 文书信息
     _case?: Case; // 案件信息

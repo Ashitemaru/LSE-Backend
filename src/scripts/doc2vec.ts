@@ -12,6 +12,7 @@ const ensureModelLoaded = () => {
 
 export const loadModel = async () => {
     if (model === undefined) {
+        winston.info("Loading word2vec model...");
         const begin = Date.now();
         model = await new Promise<Model>((resolve, reject) => {
             w2v.loadModel("./word2vec/sgns.wiki.bigram-char.txt", (error, result) => {
@@ -27,9 +28,12 @@ export const loadModel = async () => {
     }
 };
 
-export const doc2vec = (doc: string): number[] => {
+export const doc2vec = (doc: string): number[] | undefined => {
     ensureModelLoaded();
     const vectors = model.getVectors(cutForSearch(doc));
+    if (vectors.length === 0) {
+        return undefined;
+    }
     const sum = vectors.reduce((x, y) => x.add(y));
     return sum.values.map((v) => v / vectors.length);
 };
