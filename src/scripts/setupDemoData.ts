@@ -110,6 +110,8 @@ const setupDemoData = async () => {
     const bar = new SingleBar({});
     bar.start(filesSelected.length, 0);
     const causeDict: Dict = {};
+    const courtSet = new Set<string>();
+    const judgeSet = new Set<string>();
     for (const filename of filesSelected) {
         bar.increment(1);
         const text = await fs.promises.readFile(path.join("dataset", filename));
@@ -132,6 +134,10 @@ const setupDemoData = async () => {
             document: file,
         });
         addToDict(file.cause, new Float32Array(file.featureVector), causeDict);
+        courtSet.add(file.court.name);
+        file.footer?.judges?.forEach((judge) => {
+            judgeSet.add(judge.name);
+        });
         ++count;
     }
     bar.stop();
@@ -168,6 +174,69 @@ const setupDemoData = async () => {
         });
     }
     await client.indices.refresh({ index: "demo-cause" });
+
+    if (await client.indices.exists({ index: "demo-suggest" })) {
+        await client.indices.delete({ index: "demo-suggest" });
+    }
+    await client.indices.create({
+        index: "demo-suggest",
+        body: {
+            mappings: {
+                properties: {
+                    keyword: {
+                        type: "text",
+                        analyzer: "ik_max_word",
+                        search_analyzer: "ik_smart",
+                        fields: {
+                            suggest: {
+                                type: "completion",
+                                analyzer: "ik_max_word",
+                            },
+                        },
+                    },
+                    type: { type: "keyword" },
+                },
+            },
+        },
+    });
+    for (const cause of Object.keys(causeDict)) {
+        await client.index({
+            index: "demo-suggest",
+            document: {
+                keyword: cause,
+                type: "cause",
+            },
+        });
+    }
+    winston.info("Loading court names for suggestion.");
+    const courtBar = new SingleBar({});
+    courtBar.start(courtSet.size, 0);
+    for (const court of courtSet.keys()) {
+        courtBar.increment(1);
+        await client.index({
+            index: "demo-suggest",
+            document: {
+                keyword: court,
+                type: "court",
+            },
+        });
+    }
+    courtBar.stop();
+    winston.info("Loading judge names for suggestion.");
+    const judgeBar = new SingleBar({});
+    judgeBar.start(judgeSet.size, 0);
+    for (const judge of judgeSet.keys()) {
+        judgeBar.increment(1);
+        await client.index({
+            index: "demo-suggest",
+            document: {
+                keyword: judge,
+                type: "judge",
+            },
+        });
+    }
+    judgeBar.stop();
+    await client.indices.refresh({ index: "demo-suggest" });
 
     winston.info(`Successfully loaded demo data. ${filesSelected.length - count} file(s) are skipped.`);
 };

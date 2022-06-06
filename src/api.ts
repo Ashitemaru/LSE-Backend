@@ -506,4 +506,72 @@ router.get("/demo/search/advanced", async (req, res) => {
     });
 });
 
+/**
+ * @api {get} /api/demo/search/suggest 对 demo 数据进行搜索建议
+ * @apiDescription 对 demo 数据进行搜索建议
+ * @apiName demo-search-suggest
+ * @apiGroup demo
+ * @apiQuery {string} keyword 关键词
+ * @apiSuccess {number} time 查询耗时
+ * @apiSuccess {json[]} suggest 查询建议
+ * @apiSuccess {string} suggest.keyword 查询关键词
+ * @apiSuccess {string=court,judge,cause} suggest.type 关键词类别
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   "time": 2,
+ *   "suggest": [
+ *     {
+ *       "keyword": "江苏省丰县人民法院",
+ *       "type": "court"
+ *     },
+ *     {
+ *       "keyword": "江苏省南京市中级人民法院",
+ *       "type": "court"
+ *     },
+ *     {
+ *       "keyword": "江玮",
+ *       "type": "judge"
+ *     },
+ *     {
+ *       "keyword": "江生根",
+ *       "type": "judge"
+ *     }
+ *     {
+ *       "keyword": "江苏省南京市雨花台区人民法院",
+ *       "type": "court"
+ *     }
+ *   ]
+ * }
+ * @apiVersion 0.0.1
+ */
+router.get("/demo/search/suggest", async (req, res) => {
+    const { keyword } = req.query;
+    if (typeof keyword !== "string") {
+        res.status(400).json({ msg: "Query param `keyword` is required." });
+        return;
+    }
+    const { took, suggest } = await client.search({
+        index: "demo-suggest",
+        suggest: {
+            suggestion: {
+                prefix: keyword,
+                completion: { field: "keyword.suggest" },
+            },
+        }
+    });
+    if (suggest === undefined) {
+        res.status(500).json({ msg: "Suggest result is undefined!" });
+        return;
+    }
+    const options = suggest.suggestion[0].options;
+    if (!(options instanceof Array)) {
+        res.status(500).json({ msg: "Suggest options result is not array!" });
+        return;
+    }
+    res.json({
+        time: took,
+        suggest: options.map(({ _source }) => _source),
+    });
+});
+
 export default router;
