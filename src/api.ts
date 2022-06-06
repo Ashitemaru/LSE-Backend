@@ -420,6 +420,7 @@ router.post("/demo/search/similar", async (req, res) => {
  * @apiGroup demo
  * @apiQuery {string} [province] 省份
  * @apiQuery {string} [city] 城市
+ * @apiQuery {string} [court] 法院名称
  * @apiQuery {string} [type] 文书类型
  * @apiQuery {string} [name] 案件名称（注意是 _case.name）
  * @apiQuery {string} [year] 案件年份
@@ -448,6 +449,7 @@ router.get("/demo/search/advanced", async (req, res) => {
     const queryToField = {
         province: "court.province",
         city: "court.city",
+        court: "court.name",
         type: "document.type",
         name: "_case.name",
         year: "_case.year",
