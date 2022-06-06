@@ -292,6 +292,7 @@ router.get("/demo/document/:documentId", async (req, res) => {
  * @apiSuccess {json} hits.court 法院信息
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
+ * @apiSuccess {string[]} possibleCauses 可能的案由
  * @apiSuccessExample {json} Success-Response:
  *  {
  *   "time": 8,
@@ -320,7 +321,14 @@ router.get("/demo/document/:documentId", async (req, res) => {
  *         "year": "2015",
  *         "courtAlias": "舟嵊",
  *         "id": "84"
- *       }
+ *       },
+ *       "possibleCauses": [
+ *         "民间借贷纠纷",
+ *         "离婚纠纷",
+ *         "共有物分割纠纷",
+ *         "不当得利纠纷",
+ *         "确认合同无效纠纷"
+ *       ]
  *     }
  *   ]
  * }
@@ -370,8 +378,20 @@ router.post("/demo/search/similar", async (req, res) => {
         res.status(500).json({ msg: "Unexpected type of field `total`." });
         return;
     }
+    const causeResult = await client.search({
+        index: "demo-cause",
+        query: {
+            script_score: {
+                query: { match_all: {} },
+                script: {
+                    source: "cosineSimilarity(params.queryVector, 'featureVector') + 1.0",
+                    params: { queryVector },
+                }
+            }
+        },
+    }, { querystring: { size: 5 } });
     res.json({
-        time: took,
+        time: took + causeResult.took,
         count: total.value,
         hits: hits.map(({ _source }) => {
             const file: File = _source as File;
@@ -383,6 +403,7 @@ router.post("/demo/search/similar", async (req, res) => {
                 _case: file._case,
             };
         }),
+        possibleCauses: causeResult.hits.hits.map(({ _source }) => (_source as any).cause),
     });
 });
 

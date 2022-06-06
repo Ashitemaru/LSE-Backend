@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
+import Float32Array from "@stdlib/array-float32";
+import add from "@stdlib/math-strided-ops-add";
 import { XMLParser } from "fast-xml-parser";
 import { SingleBar } from "cli-progress";
 import winston from "winston";
@@ -10,6 +12,20 @@ import { loadModel } from "./doc2vec";
 winston.add(new winston.transports.Console({
     format: winston.format.combine(winston.format.cli()),
 }));
+
+type Dict = {[key: string]: {count: number; vector: Float32Array}};
+
+const addToDict = (key: string | undefined, vector: Float32Array, dict: Dict) => {
+    if (key === undefined) {
+        return;
+    }
+    if (dict[key] === undefined) {
+        dict[key] = { count: 1, vector };
+    } else {
+        dict[key].count++;
+        add(vector.length, "float32", dict[key].vector, 1, "float32", vector, 1, "float32", dict[key].vector, 1);
+    }
+};
 
 const setupDemoData = async () => {
     let count = 0;
@@ -92,6 +108,7 @@ const setupDemoData = async () => {
     const filesSelected = files.slice(0, limit);
     const bar = new SingleBar({});
     bar.start(filesSelected.length, 0);
+    const causeDict: Dict = {};
     for (const filename of filesSelected) {
         bar.increment(1);
         const text = await fs.promises.readFile(path.join("dataset", filename));
@@ -113,10 +130,44 @@ const setupDemoData = async () => {
             index: "demo-index",
             document: file,
         });
+        addToDict(file.cause, new Float32Array(file.featureVector), causeDict);
         ++count;
     }
     bar.stop();
     await client.indices.refresh({ index: "demo-index" });
+
+    if (await client.indices.exists({ index: "demo-cause" })) {
+        await client.indices.delete({ index: "demo-cause" });
+    }
+    await client.indices.create({
+        index: "demo-cause",
+        body: {
+            mappings: {
+                properties: {
+                    cause: { type: "keyword" },
+                    featureVector: {
+                        type: "dense_vector",
+                        dims: 300,
+                    },
+                },
+            },
+        },
+    });
+    const causeEntries = Object.entries(causeDict);
+    causeEntries.sort((a, b) => b[1].count - a[1].count);
+    winston.info(`There are ${causeEntries.length} different causes, and the top 100 will be loaded.`);
+    for (const e of causeEntries.slice(0, 100)) {
+        await client.index({
+            id: e[0],
+            index: "demo-cause",
+            document: {
+                cause: e[0],
+                featureVector: Array.from(e[1].vector),
+            },
+        });
+    }
+    await client.indices.refresh({ index: "demo-cause" });
+
     winston.info(`Successfully loaded demo data. ${filesSelected.length - count} file(s) are skipped.`);
 };
 
