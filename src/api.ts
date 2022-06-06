@@ -513,12 +513,14 @@ router.get("/demo/search/advanced", async (req, res) => {
  * @apiGroup demo
  * @apiQuery {string} keyword 关键词
  * @apiSuccess {number} time 查询耗时
+ * @apiSuccess {string} keyword 查询的关键词
  * @apiSuccess {json[]} suggest 查询建议
  * @apiSuccess {string} suggest.keyword 查询关键词
  * @apiSuccess {string=court,judge,cause} suggest.type 关键词类别
  * @apiSuccessExample {json} Success-Response:
  * {
  *   "time": 2,
+ *   "keyword": "江",
  *   "suggest": [
  *     {
  *       "keyword": "江苏省丰县人民法院",
@@ -570,6 +572,7 @@ router.get("/demo/search/suggest", async (req, res) => {
     }
     res.json({
         time: took,
+        keyword,
         suggest: options.map(({ _source }) => _source),
     });
 });
