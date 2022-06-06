@@ -77,6 +77,7 @@ const setupDemoData = async () => {
                     detail: { type: "object" },
                     analysis: { type: "object" },
                     result: { type: "object" },
+                    resultOneWord: { type: "keyword" },
                     timeline: { type: "object" },
                     footer: {
                         properties: {

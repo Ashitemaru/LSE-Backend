@@ -289,6 +289,7 @@ export const parseFile = (filename: string, writ: any): File => {
     const detail = parseDetail(AJJBQK);
     const analysis = parseAnalysis(CPFXGC);
     const result = parseResult(PJJG);
+    const resultOneWord = PJJG?.JAFS?.attr_value ?? PJJG?.YSJAFS?.attr_value ?? PJJG?.ESJAFS?.attr_value;
     const footer = parseFooter(WW);
     const timeline = parseTimeline(CUS_SJX);
     const featureVector = doc2vec(content);
@@ -315,6 +316,7 @@ export const parseFile = (filename: string, writ: any): File => {
         detail,
         analysis,
         result,
+        resultOneWord,
         timeline,
         footer,
         cause: record?.cause,

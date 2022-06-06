@@ -156,6 +156,7 @@ export interface File {
     detail?: Detail; // 案件基本情况
     analysis?: Analysis; // 裁判分析过程
     result?: Result; // 判决结果
+    resultOneWord?: string; // 判决结果标签
     timeline: Event[]; // 时间线
     footer?: Footer; // 文尾
     cause?: string; // 案由，前端不用

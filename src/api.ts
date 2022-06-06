@@ -63,6 +63,7 @@ router.get("/info", async (req, res) => {
  * @apiSuccess {json} hits._case 案件信息
  * @apiSuccess {json} hits.persons 当事人信息
  * @apiSuccess {json} hits.footer 文尾
+ * @apiSuccess {string} hits.resultOneWord 结案方式标签
  * @apiSuccess {number} hits.score 搜索结果得分
  * @apiSuccessExample {json} Success-Response:
  *  {
@@ -172,6 +173,7 @@ router.get("/info", async (req, res) => {
  *           }
  *         ]
  *       },
+ *       "resultOneWord": "判决",
  *       "score": 57.433887
  *     }
  *   ]
@@ -227,6 +229,7 @@ router.get("/demo/search", async (req, res) => {
                 _case: file._case,
                 persons: file.persons,
                 footer: file.footer,
+                resultOneWord: file.resultOneWord,
                 score: _score,
             };
         }),
@@ -249,6 +252,7 @@ router.get("/demo/search", async (req, res) => {
  * @apiSuccess {json} detail 案件基本情况
  * @apiSuccess {json} analysis 裁判分析过程
  * @apiSuccess {json} result 判决结果
+ * @apiSuccess {json} resultOneWord 结案方式标签
  * @apiSuccess {json[]} timeline 时间线
  * @apiSuccess {json} footer 文尾
  * @apiVersion 0.0.1
@@ -434,6 +438,7 @@ router.post("/demo/search/similar", async (req, res) => {
  * @apiSuccess {json} hits._case 案件信息
  * @apiSuccess {json} hits.persons 当事人信息
  * @apiSuccess {json} hits.footer 文尾
+ * @apiSuccess {string} hits.resultOneWord 结案方式标签
  * @apiVersion 0.0.1
  */
 router.get("/demo/search/advanced", async (req, res) => {
@@ -493,6 +498,7 @@ router.get("/demo/search/advanced", async (req, res) => {
                 _case: file._case,
                 persons: file.persons,
                 footer: file.footer,
+                resultOneWord: file.resultOneWord,
             };
         }),
     });
