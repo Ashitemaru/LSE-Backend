@@ -47,3 +47,13 @@ MEM_LIMIT=1073741824
 ```bash
 docker-compose up
 ```
+
+## 导入数据
+
+在正式提供服务前，需要先导入数据。
+
+```bash
+docker exec -it lse-backend-backend yarn setup-demo-data [N]
+```
+
+其中，`N` 为可选参数，表示导入文本数的上限。
