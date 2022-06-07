@@ -587,4 +587,42 @@ router.get("/demo/search/suggest", async (req, res) => {
     });
 });
 
+/**
+ * @api {get} /api/demo/hot/cause 查询 demo 数据集高频案由
+ * @apiDescription 查询 demo 数据集高频案由
+ * @apiName demo-hot-cause
+ * @apiGroup demo
+ * @apiQuery {number} [threshold=5] 阈值
+ * @apiSuccess {number} time 查询耗时
+ * @apiSuccess {string[]} data 高频案由
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   "time": 2,
+ *   "data": [
+ *     "民间借贷纠纷",
+ *     "劳动争议纠纷",
+ *     "房屋买卖合同纠纷",
+ *     "劳务合同纠纷",
+ *     "借款合同纠纷"
+ *   ]
+ * }
+ * @apiVersion 0.0.1
+ */
+router.get("/demo/hot/cause", async (req, res) => {
+    if (typeof req.query.threshold === "string" && isNaN(Number(req.query.threshold))) {
+        res.status(400).json({ msg: "Query param `threshold` shall be numeric." });
+        return false;
+    }
+    const threshold = Number(req.query.threshold ?? 5);
+    const { took, hits: { hits } } = await client.search({
+        index: "demo-cause",
+        query: { match_all: {} },
+        sort: "count",
+    }, { querystring: { size: threshold } });
+    res.json({
+        time: took,
+        data: hits.map(({ _source }) => (_source as any).cause),
+    });
+});
+
 export default router;

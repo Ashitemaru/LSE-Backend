@@ -152,6 +152,7 @@ const setupDemoData = async () => {
             mappings: {
                 properties: {
                     cause: { type: "keyword" },
+                    count: { type: "integer" },
                     featureVector: {
                         type: "dense_vector",
                         dims: 300,
@@ -169,6 +170,7 @@ const setupDemoData = async () => {
             index: "demo-cause",
             document: {
                 cause: e[0],
+                count: -e[1].count,
                 featureVector: Array.from(e[1].vector),
             },
         });
