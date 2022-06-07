@@ -1,6 +1,5 @@
 import express from "express";
 import winston from "winston";
-import { ValidationError } from "express-validation";
 import expressWinston from "express-winston";
 import api from "./api";
 import { client } from "./elastic";
@@ -30,15 +29,6 @@ app.use(expressWinston.logger({
 app.use(express.json());
 
 app.use("/api", api);
-
-// @ts-ignore
-app.use(function (err, req, res, next) {
-    if (err instanceof ValidationError && err.details.body !== undefined) {
-        return res.status(err.statusCode).json({ msg: err.details.body[0].message });
-    }
-
-    return res.status(500).json({ msg: "未知错误" });
-});
 
 client.info().then((r) => {
     winston.info(`Elastic version: ${r.version.number}`);
