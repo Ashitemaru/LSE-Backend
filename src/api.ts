@@ -295,10 +295,10 @@ router.get("/demo/document/:documentId", async (req, res) => {
                 return {
                     id: similarFile.id,
                     content: similarFile.content.slice(0, 200) + "...",
-                    court: file.court,
-                    document: file.document,
-                    _case: file._case,
-                    persons: file.persons,
+                    court: similarFile.court,
+                    document: similarFile.document,
+                    _case: similarFile._case,
+                    persons: similarFile.persons,
                 };
             })
         });
