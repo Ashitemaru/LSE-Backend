@@ -77,7 +77,7 @@ export const doc2vec = (doc: string): number[] | undefined => {
         const vector = model.w2v.get(keyword.word);
         if (vector !== undefined) {
             containsValidKeyword = true;
-            saxpy(model.dim, keyword.weight, vector, 1,  result, 1);
+            saxpy(model.dim, keyword.weight, vector, 1, result, 1);
         }
     }
     const l2norm = Math.sqrt(sdot(model.dim, result, 1, result, 1));
