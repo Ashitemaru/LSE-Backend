@@ -255,6 +255,13 @@ router.get("/demo/search", async (req, res) => {
  * @apiSuccess {json} resultOneWord 结案方式标签
  * @apiSuccess {json[]} timeline 时间线
  * @apiSuccess {json} footer 文尾
+ * @apiSuccess {json[]} recommend 类似文书推荐
+ * @apiSuccess {string} recommend.id 类似文书编号
+ * @apiSuccess {string} recommend.content 类似文书摘要
+ * @apiSuccess {string} recommend.court 类似文书法庭信息
+ * @apiSuccess {string} recommend.document 类似文书文书信息
+ * @apiSuccess {string} recommend._case 类似文书案件信息
+ * @apiSuccess {string} recommend.persons 类似文书当事人信息
  * @apiVersion 0.0.1
  */
 router.get("/demo/document/:documentId", async (req, res) => {
@@ -264,12 +271,36 @@ router.get("/demo/document/:documentId", async (req, res) => {
             index: "demo-index",
             id: documentId,
         });
+        const file = _source as File;
+        const { hits: { hits } } = await client.search({
+            index: "demo-index",
+            query: {
+                script_score: {
+                    query: { match_all: {} },
+                    script: {
+                        source: "cosineSimilarity(params.queryVector, 'featureVector') + 1.0",
+                        params: { queryVector: file.featureVector },
+                    }
+                }
+            },
+        }, { querystring: { from: 1, size: 5 } });
         res.json({
-            ...(_source as File),
+            ...file,
             cause: undefined,
             personSet: undefined,
             referenceSet: undefined,
             featureVector: undefined,
+            recommend: hits.map((hit) => {
+                const similarFile = hit._source as File;
+                return {
+                    id: similarFile.id,
+                    content: similarFile.content.slice(0, 200) + "...",
+                    court: file.court,
+                    document: file.document,
+                    _case: file._case,
+                    persons: file.persons,
+                };
+            })
         });
     } catch (e: any) {
         if (e instanceof ResponseError && e.meta.statusCode === 404) {
