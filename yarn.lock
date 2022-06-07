@@ -180,6 +180,20 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
+"@stdlib/array-buffer@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/array-buffer/-/array-buffer-0.0.6.tgz#46d7729ec87f752549eca9ad1fa59eff58c05786"
+  integrity sha512-noDDCXx2qQWcfO1TDrLIj2ar+857QjrgxFKlnDC6kReG10cw8/drK1ae2thwFlWWPiHwmmYcdzB5xYZfuOioRg==
+  dependencies:
+    "@stdlib/assert-has-arraybuffer-support" "^0.0.x"
+
+"@stdlib/array-dataview@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/array-dataview/-/array-dataview-0.0.6.tgz#4de1ca2f7011492a4d14b23bde1ce779842c8f96"
+  integrity sha512-wpLUzDn4UaSaF+cRbMB0RZsKGoYmgWOnqSzchK4bobjmp9p080v+8B5H2Ua50E5CopsrW98h5/3rbekzW8xdyg==
+  dependencies:
+    "@stdlib/assert-has-dataview-support" "^0.0.x"
+
 "@stdlib/array-float32@0.0.6", "@stdlib/array-float32@^0.0.x":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@stdlib/array-float32/-/array-float32-0.0.6.tgz#7a1c89db3c911183ec249fa32455abd9328cfa27"
@@ -214,6 +228,35 @@
   integrity sha512-qYJQQfGKIcky6TzHFIGczZYTuVlut7oO+V8qUBs7BJC9TwikVnnOmb3hY3jToY4xaoi5p9OvgdJKPInhyIhzFg==
   dependencies:
     "@stdlib/assert-has-uint8array-support" "^0.0.x"
+
+"@stdlib/assert-has-arraybuffer-support@^0.0.x":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-has-arraybuffer-support/-/assert-has-arraybuffer-support-0.0.7.tgz#118b4e6ed5f64a281d79cb8fedb0ec1524fa333b"
+  integrity sha512-l88RQAhzwnWR6/gsN7mzC0sgKEH2tz8+qE7RKO7N1IoQULyp8fk2tHRO+XoIctmWiIWLTujVFu7N/KfGdnNwKQ==
+  dependencies:
+    "@stdlib/array-float64" "^0.0.x"
+    "@stdlib/assert-is-arraybuffer" "^0.0.x"
+    "@stdlib/cli-ctor" "^0.0.x"
+    "@stdlib/fs-read-file" "^0.0.x"
+
+"@stdlib/assert-has-bigint-support@^0.0.x":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-has-bigint-support/-/assert-has-bigint-support-0.0.8.tgz#0ccde3725574024a60de81e38208a3b8f18ee3bb"
+  integrity sha512-Zt07mLpww8sAjELQJOfqZTqkWhFtdIZ0ah5mMwrrwbNyUehf2LI7m9PkBH0mjoQiOAaOlntz7XdSjkaSRugaHg==
+  dependencies:
+    "@stdlib/cli-ctor" "^0.0.x"
+    "@stdlib/fs-read-file" "^0.0.x"
+    "@stdlib/utils-global" "^0.0.x"
+
+"@stdlib/assert-has-dataview-support@^0.0.x":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-has-dataview-support/-/assert-has-dataview-support-0.0.7.tgz#6347c21d5952b4d1ced3ccaefd6831e06c099133"
+  integrity sha512-P365obPrgRIftimiyqVOvUmDsIhLuf8FEWVzAsyCkvVtoabVdNP2qcXzXje+WWbSbaldWLSu0xxRNmMQ7wz5Bw==
+  dependencies:
+    "@stdlib/array-buffer" "^0.0.x"
+    "@stdlib/assert-is-dataview" "^0.0.x"
+    "@stdlib/cli-ctor" "^0.0.x"
+    "@stdlib/fs-read-file" "^0.0.x"
 
 "@stdlib/assert-has-float32array-support@^0.0.x":
   version "0.0.8"
@@ -307,26 +350,17 @@
     "@stdlib/math-base-assert-is-integer" "^0.0.x"
     "@stdlib/utils-native-class" "^0.0.x"
 
-"@stdlib/assert-is-array-like-object@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-array-like-object/-/assert-is-array-like-object-0.0.8.tgz#c5edaeb83df9351935f70f40441d59f47ce0a6c3"
-  integrity sha512-54VMRI4yB1GJLfKIH0VvrcbOd62vdNEyqTxY/0d3NADlWJ8fK/wA7B87xT2KfaTbkDPeabxlKHp+Ax2qL2HBgQ==
-  dependencies:
-    "@stdlib/constants-array-max-array-length" "^0.0.x"
-    "@stdlib/math-base-assert-is-integer" "^0.0.x"
-
-"@stdlib/assert-is-array-like@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-array-like/-/assert-is-array-like-0.0.8.tgz#74cc413d4c73011b96d97e94e4e8d8d01cf8f61f"
-  integrity sha512-LV1MSacc3cUsDl17rT5kQswzOeACwaWiEU5T3KKWkr2QezST17RTf2ItthWBwXFKeE2YUDn0hI4QC08PeHOQ6w==
-  dependencies:
-    "@stdlib/constants-array-max-array-length" "^0.0.x"
-    "@stdlib/math-base-assert-is-integer" "^0.0.x"
-
 "@stdlib/assert-is-array@^0.0.x":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/assert-is-array/-/assert-is-array-0.0.7.tgz#7f30904f88a195d918c588540a6807d1ae639d79"
   integrity sha512-/o6KclsGkNcZ5hiROarsD9XUs6xQMb4lTwF6O71UHbKWTtomEF/jD0rxLvlvj0BiCxfKrReddEYd2CnhUyskMA==
+  dependencies:
+    "@stdlib/utils-native-class" "^0.0.x"
+
+"@stdlib/assert-is-arraybuffer@^0.0.x":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-arraybuffer/-/assert-is-arraybuffer-0.0.8.tgz#379ea8a8d525d370c03ed5701d530077102cb511"
+  integrity sha512-GgSV4cOLUXg+ULr6mclNobZ3uA+O5gxdWy+EEDtT0Mw3ygJEn5e4twIBqVbNYebze+nn7yyPEn7aoJTjicQt2Q==
   dependencies:
     "@stdlib/utils-native-class" "^0.0.x"
 
@@ -364,6 +398,13 @@
     "@stdlib/constants-array-max-typed-array-length" "^0.0.x"
     "@stdlib/math-base-assert-is-integer" "^0.0.x"
 
+"@stdlib/assert-is-dataview@^0.0.x":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-dataview/-/assert-is-dataview-0.0.7.tgz#11d4de04943d6b3f45788803570449c74fb3d795"
+  integrity sha512-cLHcVN8IG16PmAYOYNuN2yAlJdaGXJ76FuJpb+pW6W1EEN+UQ67ivLJhZiTcsmf4Pc1Qvy1mz9HmgSR/8DEVMQ==
+  dependencies:
+    "@stdlib/utils-native-class" "^0.0.x"
+
 "@stdlib/assert-is-enumerable-property@^0.0.x":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/assert-is-enumerable-property/-/assert-is-enumerable-property-0.0.7.tgz#0eb71ff950278d22de5ad337ee4a8d79228a81cd"
@@ -388,20 +429,20 @@
   dependencies:
     "@stdlib/utils-native-class" "^0.0.x"
 
+"@stdlib/assert-is-float32vector-like@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-float32vector-like/-/assert-is-float32vector-like-0.0.6.tgz#fca9b478e35b9701bb62bb6240cd0852ab0beb06"
+  integrity sha512-1oCvo3h9oeYSoG27YnUABEXt2iVwJjYgZX0Do3jTZXbsbX4e1TWPryyydPn+sMdhpuT8qlDpAVB4qWrJcAMoGA==
+  dependencies:
+    "@stdlib/assert-is-float32array" "^0.0.x"
+    "@stdlib/assert-is-vector-like" "^0.0.x"
+
 "@stdlib/assert-is-float64array@^0.0.x":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@stdlib/assert-is-float64array/-/assert-is-float64array-0.0.8.tgz#8c27204ae6cf309e16f0bbad1937f8aa06c2a812"
   integrity sha512-UC0Av36EEYIgqBbCIz1lj9g7qXxL5MqU1UrWun+n91lmxgdJ+Z77fHy75efJbJlXBf6HXhcYXECIsc0u3SzyDQ==
   dependencies:
     "@stdlib/utils-native-class" "^0.0.x"
-
-"@stdlib/assert-is-function-array@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-function-array/-/assert-is-function-array-0.0.7.tgz#0192140271b11187e5d3d22877d84c3c083d5c31"
-  integrity sha512-KFbBQK9sKQIxwYs9QX13uMzcZlGj5Di3ALfqXznxYM83ep8TZ4wNeJW/QyqM/4KivDouONuOyICAlG98vxBMDQ==
-  dependencies:
-    "@stdlib/assert-is-function" "^0.0.x"
-    "@stdlib/assert-tools-array-like-function" "^0.0.x"
 
 "@stdlib/assert-is-function@^0.0.x":
   version "0.0.8"
@@ -440,13 +481,12 @@
     "@stdlib/math-base-assert-is-nan" "^0.0.x"
     "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
 
-"@stdlib/assert-is-nonnegative-integer@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-nonnegative-integer/-/assert-is-nonnegative-integer-0.0.7.tgz#e6aa304dbca14020e87ea05687eccd696ef27035"
-  integrity sha512-+5SrGM3C1QRpzmi+JnyZF9QsH29DCkSONm2558yOTdfCLClYOXDs++ktQo/8baCBFSi9JnFaLXVt1w1sayQeEQ==
+"@stdlib/assert-is-ndarray-like@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-ndarray-like/-/assert-is-ndarray-like-0.0.6.tgz#f6c81d45ad208d5808ffe6dc9e8fe2fc649d0bdf"
+  integrity sha512-0ca85q8Mqee5sWHOSYKanT2F3lljixhuS9p++wgwtfqXitDmt7Le4qPclPCChGiKN3lPdHOdqAc4T2Rd6mPqrA==
   dependencies:
-    "@stdlib/assert-is-integer" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
+    "@stdlib/ndarray-base-ctor" "^0.0.x"
 
 "@stdlib/assert-is-number@^0.0.x":
   version "0.0.7"
@@ -483,14 +523,6 @@
     "@stdlib/assert-is-object" "^0.0.x"
     "@stdlib/utils-get-prototype-of" "^0.0.x"
     "@stdlib/utils-native-class" "^0.0.x"
-
-"@stdlib/assert-is-positive-integer@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-positive-integer/-/assert-is-positive-integer-0.0.7.tgz#1b63be6c89649ea58a3754bd1db0fc60b88da8c3"
-  integrity sha512-Znm/lyZk27C5qirlA9pEyTEgxlpE8e7KwjUhkEWdSZzKV3rzxheHbTQ5MYIVcc4nClmwWm8Ep4lQ0BkSwjkfKg==
-  dependencies:
-    "@stdlib/assert-is-integer" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
 
 "@stdlib/assert-is-regexp-string@^0.0.x":
   version "0.0.8"
@@ -543,6 +575,13 @@
   dependencies:
     "@stdlib/utils-native-class" "^0.0.x"
 
+"@stdlib/assert-is-vector-like@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/assert-is-vector-like/-/assert-is-vector-like-0.0.6.tgz#0795a0e197727288777fa8810b36b490be89eaf5"
+  integrity sha512-ckFR1qVVv+xUtlrb1EWRMCu4RDwtwT/OdoeW6vH/1swBkrpvb0J0P9CHdHtlBNdFsrv4B+UaAsHO84msQJL09A==
+  dependencies:
+    "@stdlib/assert-is-ndarray-like" "^0.0.x"
+
 "@stdlib/assert-tools-array-function@^0.0.x":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/assert-tools-array-function/-/assert-tools-array-function-0.0.7.tgz#34e9e5a3fca62ea75da99fc9995ba845ba514988"
@@ -550,12 +589,39 @@
   dependencies:
     "@stdlib/assert-is-array" "^0.0.x"
 
-"@stdlib/assert-tools-array-like-function@^0.0.x":
+"@stdlib/bigint-ctor@^0.0.x":
   version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/assert-tools-array-like-function/-/assert-tools-array-like-function-0.0.7.tgz#aa26d1dab446f56cc0c07096e6ac3a6aa62a70cb"
-  integrity sha512-k2eh70W1Fz96b0s1vRF+MmyBdKdILIQLShT/Z+/+r1PNWlQRsZcIhAVpGJk9Ukv9Yijgcj03WA1sYvE0dnPblQ==
+  resolved "https://registry.yarnpkg.com/@stdlib/bigint-ctor/-/bigint-ctor-0.0.7.tgz#c269ddd20cee3e8f64874b68da37109be867df01"
+  integrity sha512-rd92xIRKMFMP+KWOtOgb+RWIC6f1pm/JEPSPfWM84L6/dCu2PH3pKDlW9zskIM6akrj7j4aBKfMd83LfypMe6g==
+
+"@stdlib/blas-base-saxpy@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/blas-base-saxpy/-/blas-base-saxpy-0.0.6.tgz#c645cbfe35c0a2ef5e5a954f89b2bbbdd8be5484"
+  integrity sha512-4ZUWScagKuls7IF5YPsQ6dvdd8EzJsL4orT4ZT7Xu76kwjo1L/NVnvYaq0edV3b91V78YWbiA4tdoan+AqFpIQ==
   dependencies:
-    "@stdlib/assert-is-array-like" "^0.0.x"
+    "@stdlib/number-float64-base-to-float32" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
+    "@stdlib/utils-library-manifest" "^0.0.x"
+    "@stdlib/utils-try-require" "^0.0.x"
+
+"@stdlib/blas-base-sdot@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/blas-base-sdot/-/blas-base-sdot-0.0.6.tgz#324dfd646ce271f7aa250c81d57b5d601711279e"
+  integrity sha512-LYdpOL4VW/uOV05Xd3bfNdpWqvjAiDYzUz1kcXZQVBnMbzxkaBQMRu8eehQcVuonlNsgAuWcFm5gwdx9j8mqdg==
+  dependencies:
+    "@stdlib/number-float64-base-to-float32" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
+    "@stdlib/utils-library-manifest" "^0.0.x"
+    "@stdlib/utils-try-require" "^0.0.x"
+
+"@stdlib/blas-sdot@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/blas-sdot/-/blas-sdot-0.0.6.tgz#a966a84a3d31b25e244a6a8a19b45059c8925a87"
+  integrity sha512-wgNixwjLQsS1h6GRZyxw/wSQHcDNCqmTcGFdA4dbII8E8yQcYS9bcEbtVZ1KZ6w+pZYo1TBiLxgbZJG2w77qNA==
+  dependencies:
+    "@stdlib/assert-is-float32vector-like" "^0.0.x"
+    "@stdlib/blas-base-sdot" "^0.0.x"
+    "@stdlib/types" "^0.0.x"
 
 "@stdlib/buffer-ctor@^0.0.x":
   version "0.0.7"
@@ -581,15 +647,6 @@
     "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
     "@stdlib/utils-noop" "^0.0.x"
     minimist "^1.2.0"
-
-"@stdlib/complex-base-wrap-function@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/complex-base-wrap-function/-/complex-base-wrap-function-0.0.1.tgz#38ac18d92dd28109a4c400a212ddb5c43022b20d"
-  integrity sha512-pacFiwkWYwZB5/Uo5pU8A4HIIFWCSyxx4R9QIXsZ8O+Rydc8EEb1EiFgqSOK+hUMUysivDkcaDuUrKsZI8lwwg==
-  dependencies:
-    "@stdlib/assert-is-function" "^0.0.x"
-    "@stdlib/assert-is-nonnegative-integer" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
 
 "@stdlib/complex-float32@^0.0.x":
   version "0.0.7"
@@ -622,30 +679,12 @@
     "@stdlib/types" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/complex-imagf@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/complex-imagf/-/complex-imagf-0.0.1.tgz#62e181bd42c723431257d5d726ce9b06b71f5548"
-  integrity sha512-5lNO2i3LT4owpJTmcFr4nFGgQLgvTIk/XwMoHhRA4CQoaIijrRS3TTNPUthfI2my+43rJ/cZXRLbw7USob2jRA==
-  dependencies:
-    "@stdlib/complex-float32" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
 "@stdlib/complex-real@^0.0.x":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/complex-real/-/complex-real-0.0.7.tgz#99d4bf207e90f2dfa855f1e0f2215124056854b4"
   integrity sha512-/Aafd3idQfoZHwVMBHw07ozQTpG3ENexEtJh8x9AjgffU+2m9TMC8U32k2wTaVylKbbu3RU+P99tgsr5u0VBqw==
   dependencies:
     "@stdlib/complex-float64" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/complex-realf@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/complex-realf/-/complex-realf-0.0.1.tgz#f2c6abbaac517404f6b2c295899e77f8d9b97147"
-  integrity sha512-pQEQpBUYx7FMWQrt8+mkC/wVdI+MznYDi0MCikg454oaVvFkYVm+hMtujX9YbJlGCjsb6xD7Q8VnuIMzWCBoSQ==
-  dependencies:
-    "@stdlib/complex-float32" "^0.0.x"
     "@stdlib/types" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
@@ -668,11 +707,6 @@
     "@stdlib/complex-float32" "^0.0.x"
     "@stdlib/types" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/constants-array-max-array-length@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/constants-array-max-array-length/-/constants-array-max-array-length-0.0.7.tgz#ae767ddd8ee74445fc1d4acbf26e101e869d495e"
-  integrity sha512-JkZipiDUgJ1/H8lKjGllbvMREYwlF/S9rVZtPhqRsf1CMySLAFP56fs4szwmFB2Yz2//JxJedN/sS9niULAJHw==
 
 "@stdlib/constants-array-max-typed-array-length@^0.0.x":
   version "0.0.7"
@@ -739,15 +773,6 @@
     "@stdlib/process-cwd" "^0.0.x"
     "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
 
-"@stdlib/math-base-assert-is-finite@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-assert-is-finite/-/math-base-assert-is-finite-0.0.7.tgz#a668be91b1f955acd36c5128471e1965e0f9b5e3"
-  integrity sha512-hpzbUolS6QYLy/+pmm4bh0wuykDoUC52XAD7pg39CG5RVfUR+vVzfZxPip2LLWWIW3U1sMeKiv53FMDEKHPoqg==
-  dependencies:
-    "@stdlib/constants-float64-ninf" "^0.0.x"
-    "@stdlib/constants-float64-pinf" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
 "@stdlib/math-base-assert-is-integer@^0.0.x":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/math-base-assert-is-integer/-/math-base-assert-is-integer-0.0.7.tgz#d70faf41bed1bd737333877eb21660bf0ee779df"
@@ -762,17 +787,6 @@
   dependencies:
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/math-base-napi-binary@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-napi-binary/-/math-base-napi-binary-0.0.8.tgz#b2754b021e40e3982c5f22b853ca50724b9eb8de"
-  integrity sha512-B8d0HBPhfXefbdl/h0h5c+lM2sE+/U7Fb7hY/huVeoQtBtEx0Jbx/qKvPSVxMjmWCKfWlbPpbgKpN5GbFgLiAg==
-  dependencies:
-    "@stdlib/complex-float32" "^0.0.x"
-    "@stdlib/complex-float64" "^0.0.x"
-    "@stdlib/complex-reim" "^0.0.x"
-    "@stdlib/complex-reimf" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
 "@stdlib/math-base-napi-unary@^0.0.x":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@stdlib/math-base-napi-unary/-/math-base-napi-unary-0.0.8.tgz#4a6719886caa96bcfb67648c368a84b47072be6f"
@@ -782,50 +796,6 @@
     "@stdlib/complex-float64" "^0.0.x"
     "@stdlib/complex-reim" "^0.0.x"
     "@stdlib/complex-reimf" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/math-base-ops-add@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-ops-add/-/math-base-ops-add-0.0.1.tgz#52a7d5e82db3c0894eab2788efaca1179a31dd4f"
-  integrity sha512-mnSyHTEHKZXdoantlhMDr0ND2XRPrGQdy7Y7KBaVHJBy2LQbAm2xQ2uXEhtInWdZOpZM3f4PIygRPbgTK3Qxew==
-  dependencies:
-    "@stdlib/math-base-napi-binary" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/math-base-ops-addf@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-ops-addf/-/math-base-ops-addf-0.0.1.tgz#c47bc3d43d9c59859b3e98bde65f76b109d98594"
-  integrity sha512-sorXR5k0+dM55nEY9wLuisULMKXRPjtmpHjA4lr9aZZBqk76PdEVsipAB7XxoC+Ixzka1hGKqhclEhZkPGMxrA==
-  dependencies:
-    "@stdlib/math-base-napi-binary" "^0.0.x"
-    "@stdlib/number-float64-base-to-float32" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/math-base-ops-cadd@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-ops-cadd/-/math-base-ops-cadd-0.0.7.tgz#d1eb60eb97fb9afee639eaeb4818fd546c9cad06"
-  integrity sha512-jhso3fvQr3W/+lnLWe7I2MgmFPPujvDTKPWqFPiO6mqy0g3lJPxAraRgV4mApdS/puBYzC8yCtrnvdX8SNLQqQ==
-  dependencies:
-    "@stdlib/complex-float64" "^0.0.x"
-    "@stdlib/complex-imag" "^0.0.x"
-    "@stdlib/complex-real" "^0.0.x"
-    "@stdlib/complex-reim" "^0.0.x"
-    "@stdlib/math-base-napi-binary" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/math-base-ops-caddf@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-base-ops-caddf/-/math-base-ops-caddf-0.0.1.tgz#49d76d8d49ff165d3deed4e5be20e3d4f27f77b6"
-  integrity sha512-JhvZin/ULcpm8MkXH0QTP6SExnW7SvMOX8zwQt5/xP+6oUy8Dpp1FGLeWN6ctwVCg0IvRvG6wMOCakzTwXHz7Q==
-  dependencies:
-    "@stdlib/complex-float32" "^0.0.x"
-    "@stdlib/complex-imagf" "^0.0.x"
-    "@stdlib/complex-realf" "^0.0.x"
-    "@stdlib/complex-reimf" "^0.0.x"
-    "@stdlib/math-base-napi-binary" "^0.0.x"
-    "@stdlib/number-float64-base-to-float32" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
 "@stdlib/math-base-special-abs@^0.0.x":
@@ -845,29 +815,6 @@
     "@stdlib/math-base-napi-unary" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/math-strided-ops-add@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/math-strided-ops-add/-/math-strided-ops-add-0.0.1.tgz#cd35787f954ae4c23897f1970bdbad7589ee18e4"
-  integrity sha512-vFOvPlImTE/PLQs+U9CwSHiyaTDH+M6TF4PVfQVAK3p78bkPmj17ueM2r11Gmp7d0V0WSN8Dq5BxiWOHjbiY9w==
-  dependencies:
-    "@stdlib/math-base-ops-add" "^0.0.x"
-    "@stdlib/math-base-ops-addf" "^0.0.x"
-    "@stdlib/math-base-ops-cadd" "^0.0.x"
-    "@stdlib/math-base-ops-caddf" "^0.0.x"
-    "@stdlib/strided-base-binary" "^0.0.x"
-    "@stdlib/strided-base-binary-dtype-signatures" "^0.0.x"
-    "@stdlib/strided-base-binary-signature-callbacks" "^0.0.x"
-    "@stdlib/strided-base-dtype-resolve-enum" "^0.0.x"
-    "@stdlib/strided-base-function-object" "^0.0.x"
-    "@stdlib/strided-base-meta-data-props" "^0.0.x"
-    "@stdlib/strided-dispatch" "^0.0.x"
-    "@stdlib/strided-dtypes" "^0.0.x"
-    "@stdlib/strided-napi-binary" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-    "@stdlib/utils-try-require" "^0.0.x"
-
 "@stdlib/ndarray-base-bytes-per-element@^0.0.x":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-bytes-per-element/-/ndarray-base-bytes-per-element-0.0.8.tgz#d25f50e241d4585133e6fd584a4816bc9ce18c63"
@@ -876,45 +823,56 @@
     "@stdlib/ndarray-dtypes" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/ndarray-base-dtype-enum2str@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-dtype-enum2str/-/ndarray-base-dtype-enum2str-0.0.1.tgz#16d0a2f4325c07cbe9a65f99df63715cec71b25a"
-  integrity sha512-//7R/JHmwFQz85Iv73RNsuQnyn6FOFE9lqtdIIvuCaBvAuXNCLKBh4MElyp3KQJNBl/bN5wIPajU6b8LSCfgHA==
+"@stdlib/ndarray-base-ctor@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-ctor/-/ndarray-base-ctor-0.0.6.tgz#65e70aa3ef06964c69d2d2d464e5f8f95a06a73e"
+  integrity sha512-cusTuuo85xFqGzAe5YkvU/Oyo3bmy1aed+R36w4VW5KfpAU3gcLxTRWyApmG+42mw5M7ZQMqDHpXoaIkwVhMnQ==
   dependencies:
-    "@stdlib/strided-dtypes" "^0.0.x"
-    "@stdlib/utils-object-inverse" "^0.0.x"
-
-"@stdlib/ndarray-base-dtype-resolve-str@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-dtype-resolve-str/-/ndarray-base-dtype-resolve-str-0.0.1.tgz#a4d1d56f66dd2ea76422fa24d6a49ec4e352bf3b"
-  integrity sha512-qy88LGQGJeRdDJ9VJXP97phrI4quaPuVwGw6Jj64u5/cwOlOWEFdA5AL8h/yKgACx04yfep4uHk0zp6cUO5Nhg==
-  dependencies:
-    "@stdlib/ndarray-base-dtype-enum2str" "^0.0.x"
-    "@stdlib/ndarray-base-dtype-str2enum" "^0.0.x"
-
-"@stdlib/ndarray-base-dtype-str2enum@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-dtype-str2enum/-/ndarray-base-dtype-str2enum-0.0.1.tgz#3fb4804e7e3b743036816fa5216d2efe964951a8"
-  integrity sha512-jCF5MC7Jsf4A0lSm8XEPbPXE3Mx88jruaX05g4XI0Oxobe9YUfGhQTtz9tHsQjMQDP1AAouKZRlV+iScACxw2g==
-  dependencies:
+    "@stdlib/array-buffer" "^0.0.x"
+    "@stdlib/array-dataview" "^0.0.x"
+    "@stdlib/array-uint8" "^0.0.x"
+    "@stdlib/assert-has-bigint-support" "^0.0.x"
+    "@stdlib/assert-is-little-endian" "^0.0.x"
+    "@stdlib/bigint-ctor" "^0.0.x"
+    "@stdlib/complex-imag" "^0.0.x"
+    "@stdlib/complex-real" "^0.0.x"
+    "@stdlib/ndarray-base-bytes-per-element" "^0.0.x"
+    "@stdlib/ndarray-base-iteration-order" "^0.0.x"
+    "@stdlib/ndarray-base-minmax-view-buffer-index" "^0.0.x"
+    "@stdlib/ndarray-base-strides2order" "^0.0.x"
     "@stdlib/ndarray-dtypes" "^0.0.x"
-
-"@stdlib/ndarray-base-dtypes2signatures@^0.0.x":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-dtypes2signatures/-/ndarray-base-dtypes2signatures-0.0.7.tgz#dc3cc3de151fc7f1b23582f0ce3a7c159604fcc2"
-  integrity sha512-0acdovPlMNdCikD5QdDzLA3gHUhT24fV5CwpXv+PIR0SPkKLyi7t5+aqJcGfANpAS2URb2wkn3s6flLkWYA4/Q==
-  dependencies:
-    "@stdlib/assert-is-array-like-object" "^0.0.x"
-    "@stdlib/assert-is-nonnegative-integer" "^0.0.x"
-    "@stdlib/ndarray-base-dtype-resolve-str" "^0.0.x"
+    "@stdlib/ndarray-index-modes" "^0.0.x"
+    "@stdlib/ndarray-orders" "^0.0.x"
+    "@stdlib/number-float64-base-to-int64-bytes" "^0.0.x"
+    "@stdlib/string-replace" "^0.0.x"
     "@stdlib/types" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-accessor" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
 
-"@stdlib/ndarray-base-napi-typedarray-type-to-dtype@^0.0.x":
+"@stdlib/ndarray-base-iteration-order@^0.0.x":
   version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-napi-typedarray-type-to-dtype/-/ndarray-base-napi-typedarray-type-to-dtype-0.0.8.tgz#70f554003e005101a60f5b2aa6078641fa4a3d7a"
-  integrity sha512-zFCuFMZNlytXGt9b6Ar/iu3lw7Z2qCLtCa/R3JAPHkV3U4wm723OoAhY3rfPexuof6+O96L06j8WNWojjZUcgw==
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-iteration-order/-/ndarray-base-iteration-order-0.0.8.tgz#15169baf9de096ad0d8708f936de899b0fd5f8e8"
+  integrity sha512-mQ09AMKcWzWTZGraQf1yq3zNDBpluwk1xI9gQSD/lbPLCDfm51k5Jfz9BGw0esBDj1sXkdHJfWdFIq1FL3pOIw==
   dependencies:
-    "@stdlib/ndarray-dtypes" "^0.0.x"
+    "@stdlib/types" "^0.0.x"
+    "@stdlib/utils-library-manifest" "^0.0.x"
+
+"@stdlib/ndarray-base-minmax-view-buffer-index@^0.0.x":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-minmax-view-buffer-index/-/ndarray-base-minmax-view-buffer-index-0.0.8.tgz#bc89ae62cb4dfe24a3a10bfae56ff0021092dcec"
+  integrity sha512-H9hjXz3E/xN4Z2X9PtFzwRU26qcZU+iFCPkDGvLPGjhfagJh7LAjP12xTdd9iEi6u+p76eoe5txTTQ/ZG19Jbw==
+  dependencies:
+    "@stdlib/types" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
+    "@stdlib/utils-library-manifest" "^0.0.x"
+
+"@stdlib/ndarray-base-strides2order@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-base-strides2order/-/ndarray-base-strides2order-0.0.6.tgz#59c6a8ae02f59f8e2191e576c49aad12327f1e9a"
+  integrity sha512-OMVcB9msivnDGQ+7Tk7CeByEVtwnxsKtMFuRSVpn4sQOXsIgnu4wU3UuhtEGu/zAdmKBeleUU4AW8WzuPAMEcg==
+  dependencies:
+    "@stdlib/math-base-special-abs" "^0.0.x"
+    "@stdlib/types" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
 "@stdlib/ndarray-dtypes@^0.0.x":
@@ -927,26 +885,20 @@
     "@stdlib/utils-keys" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/ndarray-promotion-rules@^0.0.x":
+"@stdlib/ndarray-index-modes@^0.0.x":
   version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-promotion-rules/-/ndarray-promotion-rules-0.0.8.tgz#fe8ae0a6f96b2a879869e9c2aa495f871c39bdc5"
-  integrity sha512-D6T7JGaLRyj2fwjqibyBZkEPfPVCuEF00QroXmQF5MzXSK2LAezfheq4F/tGq0anACdJR8CG+asWCY6NTLFvig==
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-index-modes/-/ndarray-index-modes-0.0.8.tgz#ba1efd795c6b3d93b515ee3de59e50a92c8c94e0"
+  integrity sha512-isghugtlC/95IXfnnAfSUKBncYvUT/TuuS+50OaSfvt5OVQiA7PlDA1nLjFnkiO+C0E9GUu2S8uzX94d+SybFg==
   dependencies:
-    "@stdlib/assert-has-own-property" "^0.0.x"
-    "@stdlib/ndarray-base-dtype-resolve-str" "^0.0.x"
-    "@stdlib/ndarray-dtypes" "^0.0.x"
-    "@stdlib/utils-keys" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
-"@stdlib/ndarray-safe-casts@^0.0.x":
+"@stdlib/ndarray-orders@^0.0.x":
   version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-safe-casts/-/ndarray-safe-casts-0.0.8.tgz#a8644849027790994de57034d860569bc231593d"
-  integrity sha512-ehkTO8FBv3EmN7W4uTt5Q9Zjd4kCvmEtetln42+4itO/bN+twU5cCywUYQrFY5sk2E38IKA/fBIsLshuaIoqwQ==
+  resolved "https://registry.yarnpkg.com/@stdlib/ndarray-orders/-/ndarray-orders-0.0.8.tgz#8a4d203de304d8b5a6991070ff42954abc5d8cb2"
+  integrity sha512-6IUY/AQF9McuPFQH8oROazarZg+lvvwUzdxYt4PQF4HwoIkfw+wju6TwwlFQxIo4CpWAoGa1hv3ipcrpRbGAaQ==
   dependencies:
-    "@stdlib/assert-has-own-property" "^0.0.x"
-    "@stdlib/ndarray-base-dtype-resolve-str" "^0.0.x"
-    "@stdlib/ndarray-dtypes" "^0.0.x"
-    "@stdlib/utils-keys" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
     "@stdlib/utils-library-manifest" "^0.0.x"
 
 "@stdlib/number-ctor@^0.0.x":
@@ -960,6 +912,18 @@
   integrity sha512-hMvjeOOL6IrymaCiBCa3etwSKi8/9hYhl7+K3gkiqA7vImgtX0Txvy86/jbyIoP2AHYCIFCT0xyickp+llCK9g==
   dependencies:
     "@stdlib/array-float32" "^0.0.x"
+
+"@stdlib/number-float64-base-to-int64-bytes@^0.0.x":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@stdlib/number-float64-base-to-int64-bytes/-/number-float64-base-to-int64-bytes-0.0.6.tgz#8b4a2c3a42e377a793078dcb1d08ae1563f47eaf"
+  integrity sha512-VQe3yxagM9979fjB3QpjDjRRQhkUQwOUmW9kQRNC+rYduy+jStUKBCrHyJlGlCWZeI8dsFN1+DeXiDnPhPwngQ==
+  dependencies:
+    "@stdlib/array-dataview" "^0.0.x"
+    "@stdlib/array-uint8" "^0.0.x"
+    "@stdlib/assert-is-little-endian" "^0.0.x"
+    "@stdlib/math-base-special-floor" "^0.0.x"
+    "@stdlib/types" "^0.0.x"
+    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
 
 "@stdlib/number-float64-base-to-words@^0.0.x":
   version "0.0.6"
@@ -1051,134 +1015,6 @@
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@stdlib/streams-node-stdin/-/streams-node-stdin-0.0.7.tgz#65ff09a2140999702a1ad885e6505334d947428f"
   integrity sha512-gg4lgrjuoG3V/L29wNs32uADMCqepIcmoOFHJCTAhVe0GtHDLybUVnLljaPfdvmpPZmTvmusPQtIcscbyWvAyg==
-
-"@stdlib/strided-base-binary-dtype-signatures@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-binary-dtype-signatures/-/strided-base-binary-dtype-signatures-0.0.1.tgz#d3841b7ca9dde9a9e5f67fbf494a2c46bfbcd834"
-  integrity sha512-+C0JjQq10MhCbe0VLe1xJjqpXBP4IJ5Nst5AhEUvjugo5FtSZx1Iy8RjRbcbD1Wn32yodDx6cHO9vE8M7Ch28g==
-  dependencies:
-    "@stdlib/ndarray-promotion-rules" "^0.0.x"
-    "@stdlib/ndarray-safe-casts" "^0.0.x"
-    "@stdlib/strided-base-dtype-resolve-enum" "^0.0.x"
-    "@stdlib/strided-base-dtype-resolve-str" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-
-"@stdlib/strided-base-binary-signature-callbacks@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-binary-signature-callbacks/-/strided-base-binary-signature-callbacks-0.0.1.tgz#5a1ba97b172da7568a046fd0fd12e26f264b2ced"
-  integrity sha512-ooJL4K4Mbxlwk+Vna3539Y9zrwPfYKqt1YrJz6AgcdS1O96kCPsjDQ74aaQuCTZGZlLBF5OXB6i0jgTyOXfZdA==
-  dependencies:
-    "@stdlib/complex-base-wrap-function" "^0.0.x"
-    "@stdlib/complex-float32" "^0.0.x"
-    "@stdlib/complex-float64" "^0.0.x"
-    "@stdlib/strided-base-dtype-resolve-str" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-
-"@stdlib/strided-base-binary@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-binary/-/strided-base-binary-0.0.8.tgz#6db90346870c2519ab7e8c3ab19fe40641c27d17"
-  integrity sha512-9CMFMs+qKbhDEkO6VonK97kfbPkscjDm2cLwUL3XwSi/dA8FNnh984Ua0QnIghIWrGY0k4px/j30rfkNDP1sTw==
-  dependencies:
-    "@stdlib/complex-float32" "^0.0.x"
-    "@stdlib/complex-float64" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/strided-base-dtype-enum2str@^0.0.x":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-dtype-enum2str/-/strided-base-dtype-enum2str-0.0.2.tgz#c04dd61f0df2dd3bedf4246b1f718667fab422ad"
-  integrity sha512-DGZWv2lBQ8VgvOgSYY7mG9LdWqSvfumnErxFhieRejoL7TbJ5xEzcFbIiA7fRvOYlhe+RW3fpD90SWZb719B6A==
-  dependencies:
-    "@stdlib/strided-dtypes" "^0.0.x"
-    "@stdlib/utils-object-inverse" "^0.0.x"
-
-"@stdlib/strided-base-dtype-resolve-enum@^0.0.x":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-dtype-resolve-enum/-/strided-base-dtype-resolve-enum-0.0.2.tgz#0e8a597788d81e7471c74f08aba9a5dd49408ca5"
-  integrity sha512-ZxlLioUlOUKF+N104fr1hEAXvI82izLdLpjzIHFcSa7xI5eWo35XLCgFlgLRNRjU3x6nmrE4GqOxjh1wxVy8+Q==
-  dependencies:
-    "@stdlib/strided-base-dtype-enum2str" "^0.0.x"
-    "@stdlib/strided-base-dtype-str2enum" "^0.0.x"
-
-"@stdlib/strided-base-dtype-resolve-str@^0.0.x":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-dtype-resolve-str/-/strided-base-dtype-resolve-str-0.0.2.tgz#c3f4b40abdfbec54eba9cd74c294009c5fd567ed"
-  integrity sha512-V0q2ZuDg192jSqviFuYkdaScmMuwO4kGiuWPNvBu1MEx8yYi1Aku43+4Q6k0Q4lZYmP4o7XGRfVB/gh2SNCC0w==
-  dependencies:
-    "@stdlib/strided-base-dtype-enum2str" "^0.0.x"
-    "@stdlib/strided-base-dtype-str2enum" "^0.0.x"
-
-"@stdlib/strided-base-dtype-str2enum@^0.0.x":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-dtype-str2enum/-/strided-base-dtype-str2enum-0.0.2.tgz#0f0bf279cee38138a5988c0fc3e770d90799405c"
-  integrity sha512-TdwUSe5Eou3U9lI9x/POXpkb4Ot/4oTpS+xLGoxdOaLTUovzxXm6yiqV0kneBM3/2gPK1EiUFInI4gu44N8smQ==
-  dependencies:
-    "@stdlib/strided-dtypes" "^0.0.x"
-
-"@stdlib/strided-base-function-object@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-function-object/-/strided-base-function-object-0.0.8.tgz#00024ff9c99eaa9146c2313db64ad225443b8fb1"
-  integrity sha512-LXGEGC+gNOPaGvCvxLny+oyagVDxmOas+4nwRxlBvsEF23NVYaWqJBdNCVoxG9n3zffdme96phaGXcHPfEN1Qw==
-  dependencies:
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/strided-base-meta-data-props@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-base-meta-data-props/-/strided-base-meta-data-props-0.0.1.tgz#e18e9fa3cfb30266f2edb89c07ea3c391670ab56"
-  integrity sha512-8mEw9nOUfve5gN/2eeRxGNtf4OJvJQFigTP1dTsC81+vKT4mFA9lXF0T7iyctKJGi1UONuW6n1cJJ1JUMH4Lxw==
-  dependencies:
-    "@stdlib/ndarray-base-dtypes2signatures" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-accessor" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
-
-"@stdlib/strided-dispatch@^0.0.x":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-dispatch/-/strided-dispatch-0.0.6.tgz#f8819187446ae94c74900e2984636c0246b6d29c"
-  integrity sha512-bR/rCpLJ0y2rOPXYYsvxoZryZ6XsZX3j/niJGon/S0l+AGJbJd8RuylalZGJbhx4ayBHJbPz35uMlPuQ2Ktf8A==
-  dependencies:
-    "@stdlib/assert-is-collection" "^0.0.x"
-    "@stdlib/assert-is-function" "^0.0.x"
-    "@stdlib/assert-is-function-array" "^0.0.x"
-    "@stdlib/assert-is-integer" "^0.0.x"
-    "@stdlib/assert-is-nonnegative-integer" "^0.0.x"
-    "@stdlib/assert-is-positive-integer" "^0.0.x"
-    "@stdlib/math-base-special-abs" "^0.0.x"
-    "@stdlib/types" "^0.0.x"
-
-"@stdlib/strided-dtypes@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-dtypes/-/strided-dtypes-0.0.8.tgz#dcc78e73c68d81443955f2d3f92f3e6b7f8f2a08"
-  integrity sha512-QFjQYwMGaWy7mPBUzeoT5Ql+q89l9unMfICAA4XWbhlJm5hLoKRdbgMDN11AEdp01ulLRlrdUnGpqd7ponJoZw==
-  dependencies:
-    "@stdlib/ndarray-dtypes" "^0.0.x"
-    "@stdlib/utils-define-nonenumerable-read-only-property" "^0.0.x"
-    "@stdlib/utils-define-read-only-property" "^0.0.x"
-    "@stdlib/utils-keys" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/strided-napi-addon-arguments@^0.0.x":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-napi-addon-arguments/-/strided-napi-addon-arguments-0.0.9.tgz#07c91d7251a01d978a46fb1f6ac96a797a622e48"
-  integrity sha512-TQp3PJ2jdoM7Du0r7CbKi02ZVOuRbFxBhGyC4O6mqGyf/SdgY/TLszG+2mFV+bWH/qe/UNbsNzI1zdKflOjOzw==
-  dependencies:
-    "@stdlib/math-base-assert-is-finite" "^0.0.x"
-    "@stdlib/math-base-special-floor" "^0.0.x"
-    "@stdlib/ndarray-base-bytes-per-element" "^0.0.x"
-    "@stdlib/ndarray-base-napi-typedarray-type-to-dtype" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
-
-"@stdlib/strided-napi-binary@^0.0.x":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@stdlib/strided-napi-binary/-/strided-napi-binary-0.0.1.tgz#ce96836cedd4ea776f4fdffb652793924c5a4742"
-  integrity sha512-pfnM5kKJJ3KPC0IUZ4bM5c6RiMAao8SWg+AaWypstCAm6w3RHS0xPyl5/iJDr15WwgkxgzN1AnoTbOvAOlrvBQ==
-  dependencies:
-    "@stdlib/strided-base-binary" "^0.0.x"
-    "@stdlib/strided-base-function-object" "^0.0.x"
-    "@stdlib/strided-dtypes" "^0.0.x"
-    "@stdlib/strided-napi-addon-arguments" "^0.0.x"
-    "@stdlib/utils-library-manifest" "^0.0.x"
 
 "@stdlib/string-lowercase@^0.0.x":
   version "0.0.8"
@@ -1342,18 +1178,6 @@
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@stdlib/utils-noop/-/utils-noop-0.0.10.tgz#2d1471a9621ef209d33e3dd0f95ee13bb3d1d5bd"
   integrity sha512-o1MmWXjMTzfipmUkVe+C57OioVikoxQQfTFePCwYQnzsujJmDqQ/azbwG6kJ4a4fuMWgV9duVn8mntzrzB7W9A==
-
-"@stdlib/utils-object-inverse@^0.0.x":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@stdlib/utils-object-inverse/-/utils-object-inverse-0.0.8.tgz#bffaebfe9f633fa09c9e9d65f6c125e96185d690"
-  integrity sha512-tg2cpMkyHmqfX62whCIgwwgoYsiktGCjzI2I3RvA1kpu56QEjS6wa84u/AZ89GTiNISOIoq1J3EEi+kfODO3jQ==
-  dependencies:
-    "@stdlib/assert-has-own-property" "^0.0.x"
-    "@stdlib/assert-is-array" "^0.0.x"
-    "@stdlib/assert-is-boolean" "^0.0.x"
-    "@stdlib/assert-is-object-like" "^0.0.x"
-    "@stdlib/assert-is-plain-object" "^0.0.x"
-    "@stdlib/utils-keys" "^0.0.x"
 
 "@stdlib/utils-regexp-from-string@^0.0.x":
   version "0.0.8"

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import Float32Array from "@stdlib/array-float32";
-import add from "@stdlib/math-strided-ops-add";
+import saxpy from "@stdlib/blas-base-saxpy";
 import { XMLParser } from "fast-xml-parser";
 import { SingleBar } from "cli-progress";
 import winston from "winston";
@@ -23,7 +23,7 @@ const addToDict = (key: string | undefined, vector: Float32Array, dict: Dict) =>
         dict[key] = { count: 1, vector };
     } else {
         dict[key].count++;
-        add(vector.length, "float32", dict[key].vector, 1, "float32", vector, 1, "float32", dict[key].vector, 1);
+        saxpy(vector.length, 1, vector, 1, dict[key].vector, 1);
     }
 };
 

@@ -1,7 +1,8 @@
 import Float32Array from "@stdlib/array-float32";
-import add from "@stdlib/math-strided-ops-add";
+import saxpy from "@stdlib/blas-base-saxpy";
+import sdot from "@stdlib/blas-base-sdot";
 import { eachLine } from "line-reader";
-import { cutForSearch } from "nodejieba";
+import { textRankExtract } from "nodejieba";
 import winston from "winston";
 import { SingleBar } from "cli-progress";
 
@@ -69,15 +70,16 @@ export const loadModel = async () => {
 
 export const doc2vec = (doc: string): number[] | undefined => {
     ensureModelLoaded();
-    const vectors: Float32Array[] = cutForSearch(doc)
-        .map((word) => model.w2v.get(word))
-        .filter((v) => v !== undefined) as Float32Array[];
-    if (vectors.length === 0) {
-        return undefined;
-    }
+    const keywords = textRankExtract(doc, 20);
     const result = new Float32Array(model.dim);
-    for (const vector of vectors) {
-        add(model.dim, "float32", result, 1, "float32", vector, 1, "float32", result, 1);
+    let containsValidKeyword = false;
+    for (const keyword of keywords) {
+        const vector = model.w2v.get(keyword.word);
+        if (vector !== undefined) {
+            containsValidKeyword = true;
+            saxpy(model.dim, keyword.weight, vector, 1,  result, 1);
+        }
     }
-    return Array.from(result, (v) => v / vectors.length);
+    const l2norm = Math.sqrt(sdot(model.dim, result, 1, result, 1));
+    return containsValidKeyword ? Array.from(result, (v) => v / l2norm) : undefined;
 };
