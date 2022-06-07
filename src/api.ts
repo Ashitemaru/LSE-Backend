@@ -296,6 +296,7 @@ router.get("/demo/document/:documentId", async (req, res) => {
  * @apiSuccess {json} hits.court 法院信息
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
+ * @apiSuccess {json} hits.persons 当事人信息
  * @apiSuccess {string[]} possibleCauses 可能的案由
  * @apiSuccessExample {json} Success-Response:
  *  {
@@ -405,6 +406,7 @@ router.post("/demo/search/similar", async (req, res) => {
                 court: file.court,
                 document: file.document,
                 _case: file._case,
+                persons: file.persons,
             };
         }),
         possibleCauses: causeResult.hits.hits.map(({ _source }) => (_source as any).cause),
@@ -434,6 +436,7 @@ router.post("/demo/search/similar", async (req, res) => {
  * @apiSuccess {number} count 命中记录总数
  * @apiSuccess {json[]} hits 命中记录
  * @apiSuccess {string} hits.id 编号
+ * @apiSuccess {string} hits.content 正文缩略信息，带高亮
  * @apiSuccess {json} hits.court 法院信息
  * @apiSuccess {json} hits.document 文书信息
  * @apiSuccess {json} hits._case 案件信息
@@ -478,6 +481,12 @@ router.get("/demo/search/advanced", async (req, res) => {
     const { took, hits: { total, hits } } = await client.search({
         index: "demo-index",
         query: { bool: { must } },
+        highlight: {
+            require_field_match: false,
+            fields: {
+                content: {},
+            },
+        },
     }, {
         querystring: {
             from: req.query.offset,
@@ -491,10 +500,11 @@ router.get("/demo/search/advanced", async (req, res) => {
     res.json({
         time: took,
         count: total.value,
-        hits: hits.map(({ _source }) => {
+        hits: hits.map(({ _source, highlight }) => {
             const file: File = _source as File;
             return {
                 id: file.id,
+                content: (highlight?.content[0] ?? file.content.slice(0, 80)) + "...",
                 court: file.court,
                 document: file.document,
                 _case: file._case,
