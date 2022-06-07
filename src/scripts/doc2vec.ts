@@ -2,7 +2,7 @@ import Float32Array from "@stdlib/array-float32";
 import saxpy from "@stdlib/blas-base-saxpy";
 import sdot from "@stdlib/blas-base-sdot";
 import { eachLine } from "line-reader";
-import { textRankExtract } from "nodejieba";
+import { extract } from "nodejieba";
 import winston from "winston";
 import { SingleBar } from "cli-progress";
 
@@ -70,7 +70,7 @@ export const loadModel = async () => {
 
 export const doc2vec = (doc: string): number[] | undefined => {
     ensureModelLoaded();
-    const keywords = textRankExtract(doc, 20);
+    const keywords = extract(doc, 20);
     const result = new Float32Array(model.dim);
     let containsValidKeyword = false;
     for (const keyword of keywords) {
